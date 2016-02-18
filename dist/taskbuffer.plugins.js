@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+/// <reference path="./typings/main.d.ts" />
+var plugins = {
+    beautylog: require("beautylog"),
+    Q: require("q")
+};
+module.exports = plugins;
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRhc2tidWZmZXIucGx1Z2lucy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSw0Q0FBNEM7QUFDNUMsSUFBSSxPQUFPLEdBQUc7SUFDVixTQUFTLEVBQUUsT0FBTyxDQUFDLFdBQVcsQ0FBQztJQUMvQixDQUFDLEVBQUUsT0FBTyxDQUFDLEdBQUcsQ0FBQztDQUNsQixDQUFDO0FBQ0YsaUJBQVMsT0FBTyxDQUFDIiwiZmlsZSI6InRhc2tidWZmZXIucGx1Z2lucy5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8vLyA8cmVmZXJlbmNlIHBhdGg9XCIuL3R5cGluZ3MvbWFpbi5kLnRzXCIgLz5cbnZhciBwbHVnaW5zID0ge1xuICAgIGJlYXV0eWxvZzogcmVxdWlyZShcImJlYXV0eWxvZ1wiKSxcbiAgICBROiByZXF1aXJlKFwicVwiKVxufTtcbmV4cG9ydCA9IHBsdWdpbnM7XG4iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=

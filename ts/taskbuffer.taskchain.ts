@@ -1,9 +1,7 @@
-/// <reference path="./index.ts" />
-module TaskbufferTaskchain {
-    export var init = function(){
-        var taskChain = function(taskArrayArg:Task[]){
-            return new TaskChain();
-        };
-        return taskChain();
-    }
-}
+/// <reference path="./typings/main.d.ts" />
+import classes = require("./taskbuffer.classes");
+var taskChain = function(taskArrayArg:classes.Task[]){
+
+    return new classes.TaskChain(taskArrayArg);
+};
+export = taskChain;

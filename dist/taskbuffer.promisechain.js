@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+/// <reference path="./typings/main.d.ts" /> 
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRhc2tidWZmZXIucHJvbWlzZWNoYWluLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLDRDQUE0QyIsImZpbGUiOiJ0YXNrYnVmZmVyLnByb21pc2VjaGFpbi5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8vLyA8cmVmZXJlbmNlIHBhdGg9XCIuL3R5cGluZ3MvbWFpbi5kLnRzXCIgLz4iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=
