@@ -3,7 +3,8 @@ export declare class Task {
     idle: boolean;
     running: boolean;
     buffered: boolean;
-    private _counterBufferRelative;
+    bufferCounter: number;
+    bufferMax: number;
     private _counterTriggerAbsolute;
     private _state;
     preTask: Task;
