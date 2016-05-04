@@ -27,6 +27,7 @@ export class Task {
         }
     }
     trigger(){
+        let done = plugins.Q.defer();
         helpers.runTask(this.preTask)
             .then(function(){
 
@@ -34,6 +35,10 @@ export class Task {
             .then(function(){
 
             })
+            .then(function(){
+                done.resolve();
+            });
+       return done.promise;
     };
     triggerBuffered(){
         var done = plugins.Q.defer();

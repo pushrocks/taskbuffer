@@ -16,4 +16,10 @@ npm install taskbuffer --save
 * A Task in its most simple form is a function that is executed when the task runs.
 * It can have a preTaska and an afterTask (those are run before or after the main function whenever the task is called)
 * A Task can be buffered. That means it can be called multiple times in a very short time. However execution happens in line: meaning execution of the task's main function is on halt until the previous task call has finished.
+* Task.trigger() and Task.triggerBuffered() always return a Promise;
+* Task.triggered() is an ObservableStram that emits events every time a task is promised.
+* Task is compatible to gulp streams.
+
+#### Taskchain
 * Multiple Tasks can be combined in a bigger task using a Taskchain. Taskchain extends Task.
+
