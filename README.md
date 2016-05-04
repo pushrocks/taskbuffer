@@ -22,7 +22,8 @@ npm install taskbuffer --save
   meaning execution of the task's main function is on halt until the previous task call has finished.
   You can set bufferMax number, which is the max number of buffered task calls.
   Any additional calls will then be truncated
-* Task.trigger() and Task.triggerBuffered() always return a Promise;
+* Task.trigger() and Task.triggerBuffered() always return a Promise
+  which is fullfilled once the related task call has completed.
 * Task.triggered() is an ObservableStram that emits events every time a task is promised.
 * Task is compatible to gulp streams.
 
