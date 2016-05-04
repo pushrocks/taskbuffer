@@ -24,7 +24,7 @@ npm install taskbuffer --save
   Any additional calls will then be truncated
 * Task.trigger() and Task.triggerBuffered() always return a Promise
   which is fullfilled once the related task call has completed.
-* Task.triggered() is an ObservableStram that emits events every time a task is promised.
+* Task.triggered() is an Observable stream that emits events every time a task call is called and every time a call is completed.
 * Task is compatible to gulp streams.
 
 #### Taskchain
