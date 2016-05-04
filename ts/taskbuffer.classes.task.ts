@@ -7,8 +7,9 @@ export class Task {
     idle:boolean;
     running:boolean;
     buffered:boolean;
-    private _counterBufferRelative;
-    private _counterTriggerAbsolute;
+    bufferCounter:number;
+    bufferMax:number;
+    private _counterTriggerAbsolute:number;
     private _state:string;
     preTask:Task;
     afterTask:Task;
