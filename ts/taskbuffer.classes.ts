@@ -1,22 +1,38 @@
 /// <reference path="./typings/main.d.ts" />
 import plugins = require("./taskbuffer.plugins");
+import helpers = require("./taskbuffer.classes.helpers");
 export class Task {
     task:any;
     idle:boolean;
-    buffered:boolean;
-    bufferedForced:boolean;
     running:boolean;
+    buffered:boolean;
+    private _counterBufferRelative;
+    private _counterTriggerAbsolute;
     private _state:string;
     preTask:Task;
     afterTask:Task;
 
-    constructor(taskArg,optionsArg?:{preTask?:Task,afterTask?:Task}){
+    constructor(taskArg,optionsArg:{preTask?:Task,afterTask?:Task, buffered?:boolean} = {}){
+        var options = optionsArg;
         this.task = taskArg;
+        this.preTask = options.preTask;
+        this.afterTask = options.afterTask;
+        this.idle = true;
+        this.running = false;
+        if (typeof options.buffered === "boolean"){
+            this.buffered = options.buffered;
+        } else {
+            this.buffered = false;
+        }
     }
     trigger(){
-        this.preTask.task()
-            .then(this.task)
-            .then(this.afterTask.task);
+        helpers.runTask(this.preTask)
+            .then(function(){
+
+            })
+            .then(function(){
+
+            })
     };
     triggerBuffered(){
         var done = plugins.Q.defer();
@@ -34,10 +50,11 @@ export class Task {
     }
 }
 
+
 export class TaskChain extends Task {
     constructor(taskArrayArg:Task[]){
         super({
-            task:function(){}
+            task: function(){}
         });
     }
 }
