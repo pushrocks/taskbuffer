@@ -23,7 +23,7 @@ export var runTask = function(taskArg){
     var done = plugins.Q.defer();
     var taskReturn;
     if(isTask(taskArg)){
-        taskReturn taskArg.task();
+        taskReturn = taskArg.task();
     }
     return done.promise;
 };

@@ -23,13 +23,13 @@
   },
   "homepage": "https://github.com/pushrocks/taskbuffer#readme",
   "dependencies": {
-    "beautylog": "^2.1.1",
-    "npmts": "^3.1.2",
-    "projectinfo": "0.0.2",
+    "beautylog": "^4.1.6",
+    "projectinfo": "1.0.1",
     "q": "^1.4.1",
     "rx": "^4.1.0"
   },
   "devDependencies": {
-    "should": "^8.2.2"
+    "should": "^8.3.1",
+    "npmts": "^5.1.5",
   }
 }
