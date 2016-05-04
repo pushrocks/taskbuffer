@@ -9,3 +9,11 @@ Flexible task organization for gulp.
 ```sh
 npm install taskbuffer --save
 ```
+
+## Concepts 
+
+#### Task
+* A Task in its most simple form is a function that is executed when the task runs.
+* It can have a preTaska and an afterTask (those are run before or after the main function whenever the task is called)
+* A Task can be buffered. That means it can be called multiple times in a very short time. However execution happens in line: meaning execution of the task's main function is on halt until the previous task call has finished.
+* Multiple Tasks can be combined in a bigger task using a Taskchain. Taskchain extends Task.
