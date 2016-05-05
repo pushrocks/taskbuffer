@@ -5,3 +5,4 @@ export declare let isTaskTouched: (task: Task, touchedTasksArray: Task[]) => boo
 export declare let runTask: (taskArg: Task, optionsArg?: {
     touchedTasksArray: Task[];
 }) => any;
+export declare let runBufferedTask: (taskArg: Task) => void;

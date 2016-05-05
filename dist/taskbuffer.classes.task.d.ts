@@ -14,8 +14,10 @@ export declare class Task {
         preTask?: Task;
         afterTask?: Task;
         buffered?: boolean;
+        bufferMax?: number;
     });
-    trigger(): any;
-    triggerBuffered(): void;
+    trigger(): void;
+    triggerUnBuffered(): any;
+    triggerBuffered(): any;
     state: string;
 }

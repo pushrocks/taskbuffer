@@ -1,8 +1,8 @@
-import * as classes from "./taskbuffer.classes";
-export declare class Taskchain extends classes.Task {
-    taskArray: classes.Task[];
-    constructor(taskArrayArg: classes.Task[] | classes.Task);
-    addTask(taskArg: classes.Task): void;
-    removeTask(taskArg: classes.Task): void;
+import { Task } from "./taskbuffer.classes";
+export declare class Taskchain extends Task {
+    taskArray: Task[];
+    constructor(taskArrayArg: Task[] | Task);
+    addTask(taskArg: Task): void;
+    removeTask(taskArg: Task): void;
     shiftTask(): void;
 }
