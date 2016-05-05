@@ -14,32 +14,19 @@ export class Task {
     preTask:Task;
     afterTask:Task;
 
-    constructor(taskArg,optionsArg:{preTask?:Task,afterTask?:Task, buffered?:boolean} = {}){
+    constructor(optionsArg:{taskFunction:any,preTask?:Task,afterTask?:Task, buffered?:boolean}){
+        if (!optionsArg){optionsArg = {taskFunction:function(){}}}
         var options = optionsArg;
-        this.task = taskArg;
+        this.task = optionsArg.taskFunction;
         this.preTask = options.preTask;
         this.afterTask = options.afterTask;
         this.idle = true;
         this.running = false;
-        if (typeof options.buffered === "boolean"){
-            this.buffered = options.buffered;
-        } else {
-            this.buffered = false;
-        }
+        this.buffered = options.buffered;
     }
     trigger(){
         let done = plugins.Q.defer();
-        helpers.runTask(this.preTask)
-            .then(function(){
-
-            })
-            .then(function(){
-
-            })
-            .then(function(){
-                done.resolve();
-            });
-       return done.promise;
+        return helpers.runTask(this)
     };
     triggerBuffered(){
         var done = plugins.Q.defer();
