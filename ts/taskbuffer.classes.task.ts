@@ -15,7 +15,7 @@ export class Task {
     preTask:Task;
     afterTask:Task;
 
-    constructor(optionsArg:{taskFunction:any,preTask?:Task,afterTask?:Task, buffered?:boolean}){
+    constructor(optionsArg:{taskFunction:any,preTask?:Task,afterTask?:Task, buffered?:boolean, bufferMax?:number}){
         if (!optionsArg){optionsArg = {taskFunction:function(){}}}
         var options = optionsArg;
         this.task = optionsArg.taskFunction;
@@ -24,13 +24,24 @@ export class Task {
         this.idle = true;
         this.running = false;
         this.buffered = options.buffered;
+        this.bufferMax = options.bufferMax;
     }
+    
     trigger(){
         let done = plugins.Q.defer();
-        return helpers.runTask(this);
+        if(this.buffered) {this.triggerBuffered()}
+        else{this.triggerUnBuffered()};
     };
+    triggerUnBuffered(){
+        return helpers.runTask(this);
+    }
     triggerBuffered(){
         var done = plugins.Q.defer();
+        if(!(this.bufferCounter >= this.bufferMax)){
+            this.bufferCounter++
+        }
+        helpers.runBufferedTask(this);
+        return done.promise;
     }
 
     get state():string {

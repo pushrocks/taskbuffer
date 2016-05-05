@@ -62,3 +62,7 @@ export let runTask = function(taskArg:Task,optionsArg?:{touchedTasksArray:Task[]
         
     return done.promise;
 };
+
+export let runBufferedTask = (taskArg:Task) => {
+    
+} 

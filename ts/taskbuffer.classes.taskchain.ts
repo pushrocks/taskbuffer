@@ -1,12 +1,12 @@
 /// <reference path="./typings/main.d.ts" />
 import * as plugins from "./taskbuffer.plugins";
-import * as classes from "./taskbuffer.classes"
+import {Task} from "./taskbuffer.classes";
 import helpers = require("./taskbuffer.classes.helpers");
 
-export class Taskchain extends classes.Task {
-    taskArray:classes.Task[];
+export class Taskchain extends Task {
+    taskArray:Task[];
     
-    constructor(taskArrayArg:classes.Task[]|classes.Task){
+    constructor(taskArrayArg:Task[]|Task){
         super({
             taskFunction: () => { // this is the function that gets executed when TaskChain is triggered
                 if(this.taskArray.length = 0) return; //make sure there is actually a Task available to execute
@@ -22,10 +22,10 @@ export class Taskchain extends classes.Task {
             }
         });
     }
-    addTask(taskArg:classes.Task){
+    addTask(taskArg:Task){
         this.taskArray.push(taskArg);
     };
-    removeTask(taskArg:classes.Task){
+    removeTask(taskArg:Task){
         //TODO
     };
     shiftTask(){
@@ -34,7 +34,7 @@ export class Taskchain extends classes.Task {
 };
 
 let myTask = new Taskchain(
-    new classes.Task({
+    new Task({
         taskFunction:function(){}
     })
 );
