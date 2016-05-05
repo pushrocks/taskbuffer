@@ -9,7 +9,8 @@ export declare class Task {
     private _state;
     preTask: Task;
     afterTask: Task;
-    constructor(taskArg: any, optionsArg?: {
+    constructor(optionsArg: {
+        taskFunction: any;
         preTask?: Task;
         afterTask?: Task;
         buffered?: boolean;

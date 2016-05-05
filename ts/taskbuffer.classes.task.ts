@@ -2,6 +2,7 @@
 import * as plugins from "./taskbuffer.plugins"
 import * as helpers from "./taskbuffer.classes.helpers"
 
+
 export class Task {
     task:any;
     idle:boolean;
@@ -26,7 +27,7 @@ export class Task {
     }
     trigger(){
         let done = plugins.Q.defer();
-        return helpers.runTask(this)
+        return helpers.runTask(this);
     };
     triggerBuffered(){
         var done = plugins.Q.defer();

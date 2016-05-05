@@ -1,3 +1,7 @@
-export declare var emptyTaskFunction: () => any;
-export declare var isTask: (taskArg: any) => boolean;
-export declare var runTask: (taskArg: any) => any;
+import { Task } from "./taskbuffer.classes";
+export declare let emptyTaskFunction: () => any;
+export declare let isTask: (taskArg: any) => boolean;
+export declare let isTaskTouched: (task: Task, touchedTasksArray: Task[]) => boolean;
+export declare let runTask: (taskArg: Task, optionsArg?: {
+    touchedTasksArray: Task[];
+}) => any;

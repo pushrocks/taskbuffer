@@ -1,16 +1,16 @@
 /// <reference path="./typings/main.d.ts" />
 import plugins = require("./taskbuffer.plugins");
-import * as classes from "./taskbuffer.classes";
+import {Task} from "./taskbuffer.classes"
 
-export var emptyTaskFunction = function(){
+export let emptyTaskFunction = function(){
     let done = plugins.Q.defer();
     done.resolve();
     return done.promise;
 };
 
-export var isTask = function(taskArg):boolean{
+export let isTask = function(taskArg):boolean{
     if(
-        taskArg instanceof classes.Task
+        taskArg instanceof Task
         && typeof taskArg.task === "function"
     ){
         return true;
@@ -20,14 +20,14 @@ export var isTask = function(taskArg):boolean{
 };
 
 
-let isTaskTouched = (task:classes.Task, touchedTasksArray:classes.Task[]):boolean => {
+export let isTaskTouched = (task:Task, touchedTasksArray:Task[]):boolean => {
     return false;
 }
 
-export let runTask = function(taskArg:classes.Task,optionsArg?:{touchedTasksArray:classes.Task[]}){
+export let runTask = function(taskArg:Task,optionsArg?:{touchedTasksArray:Task[]}){
     let done = plugins.Q.defer();
     let localDeferred = plugins.Q.defer();
-    let touchedTasksArray:classes.Task[];
+    let touchedTasksArray:Task[];
     if(optionsArg.touchedTasksArray){
         touchedTasksArray = optionsArg.touchedTasksArray;
     } else {
