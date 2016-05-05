@@ -1,16 +1,15 @@
 /// <reference path="../ts/typings/main.d.ts" />
-var taskbuffer = require("../dist/index");
-var classes = require("../dist/taskbuffer.classes");
-var should = require("should");
+import taskbuffer = require("../dist/index");
+let should = require("should");
 describe("taskbuffer",function(){
     describe(".task()",function(){
         var testTask;
         it("should return a new task to var testTask",function(){
-            testTask = taskbuffer.task();
+            testTask = new taskbuffer.Task({taskFunction:function(){}});
         });
 
-        it("testTask should be instance of Task",function(){
-            testTask.should.be.instanceof(classes.Task);
+        it("testTask should be and instance of Task",function(){
+            testTask.should.be.instanceof(taskbuffer.Task);
         });
         it("testTask.idle is true",function(){
             if (!testTask.idle){
