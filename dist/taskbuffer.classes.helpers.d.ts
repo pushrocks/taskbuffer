@@ -1,8 +1,9 @@
 import { Task } from "./taskbuffer.classes";
 export declare let emptyTaskFunction: () => any;
 export declare let isTask: (taskArg: any) => boolean;
-export declare let isTaskTouched: (task: Task, touchedTasksArray: Task[]) => boolean;
+export declare let isTaskTouched: (taskArg: Task, touchedTasksArray: Task[]) => boolean;
 export declare let runTask: (taskArg: Task, optionsArg?: {
     touchedTasksArray: Task[];
 }) => any;
 export declare let runBufferedTask: (taskArg: Task) => void;
+export declare let updateTaskStatus: (taskArg: any, statusArg: string) => void;

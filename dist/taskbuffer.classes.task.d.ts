@@ -1,7 +1,7 @@
 export declare class Task {
     task: any;
-    idle: boolean;
     running: boolean;
+    idle: boolean;
     buffered: boolean;
     bufferCounter: number;
     bufferMax: number;
@@ -16,7 +16,7 @@ export declare class Task {
         buffered?: boolean;
         bufferMax?: number;
     });
-    trigger(): void;
+    trigger(): any;
     triggerUnBuffered(): any;
     triggerBuffered(): any;
     state: string;

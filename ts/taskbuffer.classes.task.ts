@@ -5,8 +5,8 @@ import * as helpers from "./taskbuffer.classes.helpers"
 
 export class Task {
     task:any;
-    idle:boolean;
     running:boolean;
+    idle:boolean;
     buffered:boolean;
     bufferCounter:number;
     bufferMax:number;
@@ -21,16 +21,23 @@ export class Task {
         this.task = optionsArg.taskFunction;
         this.preTask = options.preTask;
         this.afterTask = options.afterTask;
-        this.idle = true;
         this.running = false;
+        this.idle = true;
         this.buffered = options.buffered;
         this.bufferMax = options.bufferMax;
     }
     
     trigger(){
         let done = plugins.Q.defer();
-        if(this.buffered) {this.triggerBuffered()}
-        else{this.triggerUnBuffered()};
+        if(this.buffered) {
+            this.triggerBuffered()
+                .then(done.resolve);
+        }
+        else {
+            this.triggerUnBuffered()
+                .then(done.resolve);
+        };
+        return done.promise;
     };
     triggerUnBuffered(){
         return helpers.runTask(this);
@@ -51,7 +58,7 @@ export class Task {
         if (stateArg == "locked"){
             this._state = "locked";
         } else {
-            plugins.beautylog.error("state type" );
+            plugins.beautylog.error("state type " + stateArg.blue + " could not be set");
         }
     }
 }
