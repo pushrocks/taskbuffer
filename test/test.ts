@@ -44,6 +44,6 @@ describe("taskbuffer",function(){
         it("testTask.trigger() returned Promise should be fullfilled",function(done){
             testTask.trigger()
                 .then(done);
-        })
+        });
     });
 });
