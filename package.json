@@ -24,6 +24,7 @@
   "homepage": "https://github.com/pushrocks/taskbuffer#readme",
   "dependencies": {
     "beautylog": "^4.2.0",
+    "lodash": "^4.12.0",
     "projectinfo": "1.0.1",
     "q": "^1.4.1",
     "rx": "^4.1.0"

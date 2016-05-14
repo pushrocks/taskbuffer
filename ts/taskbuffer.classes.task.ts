@@ -2,7 +2,6 @@
 import * as plugins from "./taskbuffer.plugins"
 import * as helpers from "./taskbuffer.classes.helpers"
 
-
 export class Task {
     name:string;
     task:any;
@@ -16,7 +15,14 @@ export class Task {
     preTask:Task;
     afterTask:Task;
 
-    constructor(optionsArg:{taskFunction:any,preTask?:Task,afterTask?:Task, buffered?:boolean, bufferMax?:number}){
+    constructor(optionsArg:{
+        taskFunction:any,
+        preTask?:Task,
+        afterTask?:Task,
+        buffered?:boolean,
+        bufferMax?:number,
+        name?:string
+    }){
         if (!optionsArg){optionsArg = {taskFunction:function(){}}}
         var options = optionsArg;
         this.task = optionsArg.taskFunction;
@@ -26,6 +32,7 @@ export class Task {
         this.idle = true;
         this.buffered = options.buffered;
         this.bufferMax = options.bufferMax;
+        this.name = options.name;
     }
     
     trigger(){

@@ -16,6 +16,7 @@ export declare class Task {
         afterTask?: Task;
         buffered?: boolean;
         bufferMax?: number;
+        name?: string;
     });
     trigger(): any;
     triggerUnBuffered(): any;

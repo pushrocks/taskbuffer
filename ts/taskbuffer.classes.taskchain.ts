@@ -6,8 +6,11 @@ import helpers = require("./taskbuffer.classes.helpers");
 export class Taskchain extends Task {
     taskArray:Task[];
     private _oraObject;
-    constructor(taskArrayArg:Task[]|Task){
-        super({
+    constructor(optionsArg:{
+        taskArray:Task[]
+        name?:string
+    }){
+        let options = plugins.lodash.assign(optionsArg,{
             taskFunction: () => { // this is the function that gets executed when TaskChain is triggered
                 if(this.taskArray.length = 0) return; //make sure there is actually a Task available to execute
                 let startDeferred = plugins.Q.defer(); // this is the starting Deferred object 
@@ -21,6 +24,8 @@ export class Taskchain extends Task {
                 startDeferred.resolve();
             }
         });
+        super(options);
+        this.taskArray = optionsArg.taskArray;
         this._oraObject = plugins.beautylog.ora("Taskchain idle","blue");
     }
     addTask(taskArg:Task){
@@ -32,10 +37,17 @@ export class Taskchain extends Task {
     shiftTask(){
         
     };
+    trigger(){
+        this._oraObject.start(this.name + "running");
+    }
 };
 
 let myTask = new Taskchain(
-    new Task({
-        taskFunction:function(){}
-    })
+    {
+        taskArray: [
+            new Task({
+                taskFunction:function(){}
+            })
+        ]
+    }
 );
