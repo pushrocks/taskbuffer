@@ -5,7 +5,7 @@ import helpers = require("./taskbuffer.classes.helpers");
 
 export class Taskchain extends Task {
     taskArray:Task[];
-    
+    private _oraObject;
     constructor(taskArrayArg:Task[]|Task){
         super({
             taskFunction: () => { // this is the function that gets executed when TaskChain is triggered
@@ -21,6 +21,7 @@ export class Taskchain extends Task {
                 startDeferred.resolve();
             }
         });
+        this._oraObject = plugins.beautylog.ora("Taskchain idle","blue");
     }
     addTask(taskArg:Task){
         this.taskArray.push(taskArg);

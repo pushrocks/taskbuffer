@@ -1,6 +1,3 @@
 /// <reference path="./typings/main.d.ts" />
-var plugins = {
-    beautylog: require("beautylog"),
-    Q: require("q")
-};
-export = plugins;
+export import beautylog = require("beautylog");
+export let Q = require("q");

@@ -4,6 +4,7 @@ import * as helpers from "./taskbuffer.classes.helpers"
 
 
 export class Task {
+    name:string;
     task:any;
     running:boolean;
     idle:boolean;

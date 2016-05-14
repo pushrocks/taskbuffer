@@ -1,4 +1,5 @@
 export declare class Task {
+    name: string;
     task: any;
     running: boolean;
     idle: boolean;

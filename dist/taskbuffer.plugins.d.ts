@@ -1,5 +1,2 @@
-declare var plugins: {
-    beautylog: any;
-    Q: any;
-};
-export = plugins;
+export import beautylog = require("beautylog");
+export declare let Q: any;
