@@ -1,4 +1,4 @@
-import { Task } from "./taskbuffer.classes";
+import { Task } from "./taskbuffer.classes.task";
 export declare let emptyTaskFunction: () => any;
 export declare let isTask: (taskArg: any) => boolean;
 export declare let isTaskTouched: (taskArg: Task, touchedTasksArray: Task[]) => boolean;

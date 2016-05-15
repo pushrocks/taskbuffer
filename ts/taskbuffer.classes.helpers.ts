@@ -1,6 +1,6 @@
 /// <reference path="./typings/main.d.ts" />
 import plugins = require("./taskbuffer.plugins");
-import {Task} from "./taskbuffer.classes"
+import {Task} from "./taskbuffer.classes.task";
 
 export let emptyTaskFunction = function(){
     let done = plugins.Q.defer();

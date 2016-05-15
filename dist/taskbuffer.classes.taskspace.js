@@ -1,3 +1,9 @@
+"use strict";
+var Taskspace = (function () {
+    function Taskspace() {
+    }
+    return Taskspace;
+}());
+exports.Taskspace = Taskspace;
 
-
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ0YXNrYnVmZmVyLmNsYXNzZXMudGFza3NwYWNlLmpzIiwic291cmNlc0NvbnRlbnQiOltdfQ==
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRhc2tidWZmZXIuY2xhc3Nlcy50YXNrc3BhY2UudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUlBO0lBQUE7SUFFQSxDQUFDO0lBQUQsZ0JBQUM7QUFBRCxDQUZBLEFBRUMsSUFBQTtBQUZZLGlCQUFTLFlBRXJCLENBQUEiLCJmaWxlIjoidGFza2J1ZmZlci5jbGFzc2VzLnRhc2tzcGFjZS5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8vLyA8cmVmZXJlbmNlIHBhdGg9XCIuL3R5cGluZ3MvbWFpbi5kLnRzXCIgLz5cclxuaW1wb3J0ICogYXMgcGx1Z2lucyBmcm9tIFwiLi90YXNrYnVmZmVyLnBsdWdpbnNcIlxyXG5pbXBvcnQgKiBhcyBoZWxwZXJzIGZyb20gXCIuL3Rhc2tidWZmZXIuY2xhc3Nlcy5oZWxwZXJzXCJcclxuXHJcbmV4cG9ydCBjbGFzcyBUYXNrc3BhY2Uge1xyXG4gICAgXHJcbn0iXX0=

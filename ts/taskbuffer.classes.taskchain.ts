@@ -1,6 +1,6 @@
 /// <reference path="./typings/main.d.ts" />
 import * as plugins from "./taskbuffer.plugins";
-import {Task} from "./taskbuffer.classes";
+import {Task} from "./taskbuffer.classes.task";
 import helpers = require("./taskbuffer.classes.helpers");
 
 export class Taskchain extends Task {
@@ -56,13 +56,3 @@ export class Taskchain extends Task {
         return helpers.runTask(this);
     }
 };
-
-let myTask = new Taskchain(
-    {
-        taskArray: [
-            new Task({
-                taskFunction:function(){}
-            })
-        ]
-    }
-);
