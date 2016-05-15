@@ -7,26 +7,40 @@ export class Taskchain extends Task {
     taskArray:Task[];
     private _oraObject;
     constructor(optionsArg:{
+        name?:string,
+        log?:boolean,
         taskArray:Task[]
-        name?:string
     }){
-        let options = plugins.lodash.assign(optionsArg,{
-            taskFunction: () => { // this is the function that gets executed when TaskChain is triggered
-                if(this.taskArray.length = 0) return; //make sure there is actually a Task available to execute
-                let startDeferred = plugins.Q.defer(); // this is the starting Deferred object 
-                let promisePointer = startDeferred.promise;
-                for(let keyArg in this.taskArray){
-                    promisePointer.then(function(){
-                        promisePointer = this.taskArray[keyArg].trigger();
-                        return promisePointer;
-                    })
-                };
-                startDeferred.resolve();
+        let options = plugins.lodash.assign(
+            {
+                name:"unnamed Task",
+                log:false
+            },
+            optionsArg,
+            {
+                taskFunction: () => { // this is the function that gets executed when TaskChain is triggered
+                    console.log("running taskchain function");
+                    let done = plugins.Q.defer(); // this is the starting Deferred object 
+                    let taskCounter = 0;
+                    let iterateTasks = () => {
+                        if(typeof this.taskArray[taskCounter] != "undefined"){
+                            this.taskArray[taskCounter].trigger()
+                                .then(()=>{
+                                    taskCounter++;
+                                    iterateTasks();
+                                });     
+                        } else {
+                            done.resolve();
+                        }
+                    };
+                    iterateTasks();
+                    return done.promise;
+                }
             }
-        });
+        );
         super(options);
         this.taskArray = optionsArg.taskArray;
-        this._oraObject = plugins.beautylog.ora("Taskchain idle","blue");
+        this._oraObject = new plugins.beautylog.Ora("Taskchain idle","blue");
     }
     addTask(taskArg:Task){
         this.taskArray.push(taskArg);
@@ -38,7 +52,8 @@ export class Taskchain extends Task {
         
     };
     trigger(){
-        this._oraObject.start(this.name + "running");
+        this._oraObject.start(this.name + " running...");
+        return helpers.runTask(this);
     }
 };
 

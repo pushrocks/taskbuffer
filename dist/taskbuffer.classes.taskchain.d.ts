@@ -3,11 +3,12 @@ export declare class Taskchain extends Task {
     taskArray: Task[];
     private _oraObject;
     constructor(optionsArg: {
-        taskArray: Task[];
         name?: string;
+        log?: boolean;
+        taskArray: Task[];
     });
     addTask(taskArg: Task): void;
     removeTask(taskArg: Task): void;
     shiftTask(): void;
-    trigger(): void;
+    trigger(): any;
 }

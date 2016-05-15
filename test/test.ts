@@ -5,7 +5,7 @@ let plugins = {
     q: require("q")
 }
 
-//setup some testData to work with
+// setup some testData to work with
 let testTask:taskbuffer.Task;
 let testTaskFunction = function(){
     let done = plugins.q.defer();
@@ -44,6 +44,41 @@ describe("taskbuffer",function(){
         it("testTask.trigger() returned Promise should be fullfilled",function(done){
             testTask.trigger()
                 .then(done);
+        });
+        it("should run a task without pre and afterTask",function(done){
+            let localTestTask = new taskbuffer.Task({taskFunction:testTaskFunction});
+            localTestTask.trigger().then(done);
+        });
+    });
+    describe("Taskchain",function(){
+        let testTaskchain;
+        let testTaskArray = [
+            new taskbuffer.Task({
+                name:"task1",
+                taskFunction:function(){
+                    let done = plugins.q.defer();
+                    console.log("Task1 run");
+                    done.resolve();
+                    return done.promise;
+                }
+            }),
+            new taskbuffer.Task({
+                name:"task2",
+                taskFunction: function(){
+                    let done = plugins.q.defer();
+                    console.log("Task2 run");
+                    done.resolve();
+                    return done.promise;
+                }
+            }),
+        ];
+        it("should run tasks in sequence",function(done){
+            testTaskchain = new taskbuffer.Taskchain({
+                name:"Taskchain1",
+                taskArray:testTaskArray
+            });
+            testTaskchain.trigger().then(done);
+            
         });
     });
 });
