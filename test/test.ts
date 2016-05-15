@@ -57,8 +57,7 @@ describe("taskbuffer",function(){
                 name:"task1",
                 taskFunction:function(){
                     let done = plugins.q.defer();
-                    console.log("Task1 run");
-                    done.resolve();
+                    setTimeout(done.resolve,2000);
                     return done.promise;
                 }
             }),
@@ -66,13 +65,13 @@ describe("taskbuffer",function(){
                 name:"task2",
                 taskFunction: function(){
                     let done = plugins.q.defer();
-                    console.log("Task2 run");
-                    done.resolve();
+                    setTimeout(done.resolve,2000);
                     return done.promise;
                 }
             }),
         ];
         it("should run tasks in sequence",function(done){
+            this.timeout(5000);
             testTaskchain = new taskbuffer.Taskchain({
                 name:"Taskchain1",
                 taskArray:testTaskArray
