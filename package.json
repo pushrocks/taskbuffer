@@ -1,6 +1,6 @@
 {
   "name": "taskbuffer",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "manage triggers and execution of tasks with promises",
   "main": "dist/index.js",
   "scripts": {
