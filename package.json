@@ -1,6 +1,6 @@
 {
   "name": "taskbuffer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Flexible task organization for gulp. TypeScript ready!",
   "main": "dist/index.js",
   "scripts": {
