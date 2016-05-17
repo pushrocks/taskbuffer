@@ -28,14 +28,15 @@ npm install taskbuffer --save
 * Task is compatible to gulp streams.
 
 ### class `TaskChain`
-* Multiple Tasks can be combined in a bigger task using a Taskchain.
-* Taskchain extends Task.
+* TaskChain extends Task.
+* Multiple Tasks can be combined in a bigger task using a TaskChain.
 * While the tasks are async in themselve, TaskChain **runs Tasks serialized** (one after the other)
 * that means that tasks can rely on each other and 
 
 ### class `TaskParallel`
+* TaskParallel extends Task.
 * like TaskChain, however **tasks run in parallel**
-* Tasks cannot rely on each other
+* Tasks cannot rely on each other.
 
 ### Usage
 We highly recommend TypeScript as this module supports **TypeScript intellisense**.
@@ -43,9 +44,13 @@ We highly recommend TypeScript as this module supports **TypeScript intellisense
 import * as taskbuffer from "taskbuffer";
 
 myTask = new taskbuffer.Task({
+  preTask: someOtherTask // optional, don't worry loops are prevented
+  afterTask: someOtherTask // optional, don't worry loops are prevented
   name:"myTask1",
   taskFunction:() => {
-    //do some stuff and return promise
+    // do some stuff and return promise
+    // pass on any data through promise resolution
+    // Use TypeScript for better understanding and code completion
   }
 })
 ```
