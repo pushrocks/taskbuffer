@@ -1,9 +1,9 @@
 {
   "name": "taskbuffer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Flexible task organization for gulp. TypeScript ready!",
   "main": "dist/index.js",
-  "typings":"dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "(npmts)"
   },
