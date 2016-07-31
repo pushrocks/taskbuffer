@@ -1,4 +1,5 @@
-/// <reference path="./typings/main.d.ts" />
+import "typings-global"
 export import beautylog = require("beautylog");
-export let Q = require("q");
-export let lodash= require("lodash");
+export import Q = require("q");
+export import lodash= require("lodash");
+export import rxjs = require("rxjs");

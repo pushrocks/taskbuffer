@@ -1,4 +1,3 @@
-/// <reference path="./typings/main.d.ts" />
 import * as plugins from "./taskbuffer.plugins";
 import {Task} from "./taskbuffer.classes.task";
 import helpers = require("./taskbuffer.classes.helpers");

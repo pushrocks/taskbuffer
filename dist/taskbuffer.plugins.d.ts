@@ -1,3 +1,5 @@
+import "typings-global";
 export import beautylog = require("beautylog");
-export declare let Q: any;
-export declare let lodash: any;
+export import Q = require("q");
+export import lodash = require("lodash");
+export import rxjs = require("rxjs");

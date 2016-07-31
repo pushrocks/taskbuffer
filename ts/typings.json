@@ -1,8 +1,0 @@
-{
-  "ambientDependencies": {
-    "colors": "github:DefinitelyTyped/DefinitelyTyped/colors/colors.d.ts",
-    "mocha": "github:Bartvds/tsd-deftools/typings/DefinitelyTyped/mocha/mocha.d.ts",
-    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts",
-    "should": "registry:dt/should#8.1.1+20160316155526"
-  }
-}

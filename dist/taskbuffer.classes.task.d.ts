@@ -1,3 +1,5 @@
+/// <reference types="q" />
+import * as plugins from "./taskbuffer.plugins";
 export declare class Task {
     name: string;
     task: any;
@@ -18,8 +20,8 @@ export declare class Task {
         bufferMax?: number;
         name?: string;
     });
-    trigger(): any;
-    triggerUnBuffered(): any;
-    triggerBuffered(): any;
+    trigger(): plugins.Q.Promise<{}>;
+    triggerUnBuffered(): plugins.Q.Promise<{}>;
+    triggerBuffered(): plugins.Q.Promise<{}>;
     state: string;
 }

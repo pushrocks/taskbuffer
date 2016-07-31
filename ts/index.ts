@@ -1,4 +1,3 @@
-/// <reference path="./typings/main.d.ts" />
 export {Task} from "./taskbuffer.classes.task";
 export {Taskchain} from "./taskbuffer.classes.taskchain";
 export {Taskparallel} from "./taskbuffer.classes.taskparallel";
