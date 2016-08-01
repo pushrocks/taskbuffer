@@ -1,5 +1,5 @@
 # taskbuffer
-Flexible task organization for gulp. TypeScript ready!
+flexible task management. TypeScript ready!
 
 ## Status
 [![Coverage Status](https://coveralls.io/repos/github/pushrocks/taskbuffer/badge.svg?branch=master)](https://coveralls.io/github/pushrocks/taskbuffer?branch=master)

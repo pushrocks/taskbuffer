@@ -1,7 +1,7 @@
 {
   "name": "taskbuffer",
   "version": "1.0.1",
-  "description": "Flexible task organization for gulp. TypeScript ready!",
+  "description": "flexible task management. TypeScript ready!",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pushrocks/taskbuffer.git"
+    "url": "git+https://gitlab.com/pushrocks/taskbuffer.git"
   },
   "keywords": [
     "gulp",
@@ -20,9 +20,9 @@
   "author": "Lossless GmbH",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pushrocks/taskbuffer/issues"
+    "url": "https://gitlab.com/pushrocks/taskbuffer/issues"
   },
-  "homepage": "https://github.com/pushrocks/taskbuffer#readme",
+  "homepage": "https://gitlab.com/pushrocks/taskbuffer#readme",
   "dependencies": {
     "@types/lodash": "^0.0.28",
     "@types/q": "^0.0.27",
