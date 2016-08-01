@@ -9,16 +9,16 @@ export interface ITaskFunction {
 export class Task {
     name:string;
     task:any;
-    running:boolean = false;
-    runningBuffered:boolean = false;
-    idle:boolean = true;
-    buffered:boolean = false;
-    bufferCounter:number;
-    bufferMax:number = 1;
-    private _counterTriggerAbsolute:number = 0;
-    private _state:string;
+    buffered:boolean;
     preTask:Task;
     afterTask:Task;
+
+    // initialize by default
+    running:boolean = false;
+    bufferRunner = new helpers.BufferRunner(this);
+    cycleCounter = new helpers.CycleCounter(this);
+    idle:boolean = true;
+    private _state:string = "ready";
 
     constructor(optionsArg:{
         taskFunction:ITaskFunction,
@@ -32,10 +32,9 @@ export class Task {
         this.task = optionsArg.taskFunction;
         this.preTask = options.preTask;
         this.afterTask = options.afterTask;
-        this.running = false;
-        this.idle = !this.running && !this.runningBuffered;
+        this.idle = !this.running;
         this.buffered = options.buffered;
-        this.bufferMax = options.bufferMax;
+        this.bufferRunner.setBufferMax(options.bufferMax);
         this.name = options.name;
     }
     
@@ -58,22 +57,15 @@ export class Task {
     /**
      * trigger task unbuffered.
      */
-    triggerUnBuffered(){
+    triggerUnBuffered():PromiseLike<any>{
         return helpers.runTask(this);
     }
     
     /**
      * trigger task buffered.
      */
-    triggerBuffered(){
-        var done = plugins.Q.defer();
-        if(!(this.bufferCounter >= this.bufferMax)){
-            this.bufferCounter++
-        };
-        if(!this.runningBuffered){
-            helpers.runBufferedTask(this);
-        };
-        return done.promise;
+    triggerBuffered():PromiseLike<any>{
+        return this.bufferRunner.trigger();
     }
 
     get state():string {
