@@ -10,7 +10,7 @@ export class Taskchain extends Task {
         log?:boolean,
         taskArray:Task[]
     }){
-        let options = plugins.lodash.assign(
+        let options = plugins.lodash.merge(
             {
                 name:"unnamed Taskchain",
                 log:false
@@ -25,7 +25,7 @@ export class Taskchain extends Task {
                             this._oraObject.text(this.name + " running: Task" + this.taskArray[taskCounter].name);
                             this.taskArray[taskCounter].trigger()
                                 .then(()=>{
-                                    this._oraObject.log(this.taskArray[taskCounter].name,"ok");
+                                    plugins.beautylog.ok(this.taskArray[taskCounter].name);
                                     taskCounter++;
                                     iterateTasks();
                                 });     
@@ -42,6 +42,9 @@ export class Taskchain extends Task {
         super(options);
         this.taskArray = optionsArg.taskArray;
         this._oraObject = new plugins.beautylog.Ora("Taskchain idle","blue");
+        if(optionsArg.log === true){
+            this._oraObject.start();
+        };
     }
     addTask(taskArg:Task){
         this.taskArray.push(taskArg);

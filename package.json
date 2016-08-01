@@ -28,13 +28,13 @@
     "@types/q": "^0.0.27",
     "beautylog": "^5.0.18",
     "lodash": "^4.14.1",
-    "projectinfo": "1.0.3",
     "q": "^1.4.1",
     "rxjs": "^5.0.0-beta.10",
     "typings-global": "^1.0.6"
   },
   "devDependencies": {
     "npmts-g": "^5.2.8",
-    "should": "^10.0.0"
+    "should": "^10.0.0",
+    "typings-test": "^1.0.1"
   }
 }

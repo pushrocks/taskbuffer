@@ -1,7 +1,7 @@
 import plugins = require("./taskbuffer.plugins");
-import {Task} from "./taskbuffer.classes.task";
+import {Task,ITaskFunction} from "./taskbuffer.classes.task";
 
-export let emptyTaskFunction = function(){
+export let emptyTaskFunction:ITaskFunction = function(){
     let done = plugins.Q.defer();
     done.resolve();
     return done.promise;
@@ -31,8 +31,8 @@ export let isTaskTouched = (taskArg:Task, touchedTasksArray:Task[]):boolean => {
 
 export let runTask = function(taskArg:Task,optionsArg:{touchedTasksArray:Task[]} = {touchedTasksArray:[]}){
     let done = plugins.Q.defer();
-    updateTaskStatus(taskArg,"running");
-    done.promise.then(function(){updateTaskStatus(taskArg,"idle")})
+    taskArg.running = true;
+    done.promise.then(function(){taskArg.running = false});
     let localDeferred = plugins.Q.defer();
     let touchedTasksArray:Task[];
     if(optionsArg.touchedTasksArray){
@@ -73,24 +73,12 @@ export let runTask = function(taskArg:Task,optionsArg:{touchedTasksArray:Task[]}
 export let runBufferedTask = (taskArg:Task) => {
     let recursiveBufferRunner = () => {
         if(taskArg.bufferCounter > 0){
+            taskArg.runningBuffered = true;
             taskArg.bufferCounter--;
             runTask(taskArg)
                 .then(recursiveBufferRunner);
+        } else {
+            taskArg.runningBuffered = false;
         }
     }
-}
-
-export let updateTaskStatus = (taskArg,statusArg:string) => {
-    switch (statusArg) {
-        case "running":
-            taskArg.running = true;
-            taskArg.idle = false;
-            break;
-        case "idle":
-            taskArg.running = false;
-            taskArg.idle = true;
-            break;
-        default:
-            throw new Error("status not recognised");
-    }
-}
+};

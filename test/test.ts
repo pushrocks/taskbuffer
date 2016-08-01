@@ -1,21 +1,22 @@
-/// <reference path="../ts/typings/main.d.ts" />
+import "typings-test";
 import taskbuffer = require("../dist/index");
 let should = require("should");
-let plugins = {
-    q: require("q")
-}
+import q = require("q")
 
 // setup some testData to work with
 let testTask:taskbuffer.Task;
 let testTaskFunction = function(){
-    let done = plugins.q.defer();
+    let done = q.defer();
     console.log("main function executed!")
     done.resolve();
     return done.promise;
 }
 let testPreTask = new taskbuffer.Task({
     taskFunction:function(){
+        let done = q.defer();
         console.log("preTask executed");
+        done.resolve();
+        return done.promise;
     },
     preTask:testTask
 });
@@ -56,7 +57,7 @@ describe("taskbuffer",function(){
             new taskbuffer.Task({
                 name:"task1",
                 taskFunction:function(){
-                    let done = plugins.q.defer();
+                    let done = q.defer();
                     setTimeout(done.resolve,2000);
                     return done.promise;
                 }
@@ -64,7 +65,7 @@ describe("taskbuffer",function(){
             new taskbuffer.Task({
                 name:"task2",
                 taskFunction: function(){
-                    let done = plugins.q.defer();
+                    let done = q.defer();
                     setTimeout(done.resolve,2000);
                     return done.promise;
                 }
@@ -77,7 +78,53 @@ describe("taskbuffer",function(){
                 taskArray:testTaskArray
             });
             testTaskchain.trigger().then(done);
-            
         });
     });
+    describe("taskparallel",function(){
+        let task1 = new taskbuffer.Task({
+            name:"Task 1",
+            taskFunction: () => {
+                let done = q.defer();
+                console.log("Task1 started");
+                setTimeout(() => {
+                    console.log("Task1 executed");
+                    done.resolve();
+                },5000)
+                return done.promise;
+            }
+        });
+        let task2 = new taskbuffer.Task({
+            name:"Task 1",
+            taskFunction: () => {
+                let done = q.defer();
+                console.log("Task2 started");
+                setTimeout(() => {
+                    console.log("Task2 executed");
+                    done.resolve();
+                },5000)
+                return done.promise;
+            }
+        });
+        let task3 = new taskbuffer.Task({
+            name:"Task 3",
+            taskFunction: () => {
+                let done = q.defer();
+                console.log("Task3 started");
+                setTimeout(() => {
+                    console.log("Task3 executed");
+                    done.resolve();
+                },5000)
+                return done.promise;
+            }
+        });
+        it("should run in Parallel",function(done){
+            this.timeout("7000");
+            let testTaskparallel = new taskbuffer.Taskparallel({
+                taskArray:[task1,task2,task3]
+            });
+            testTaskparallel.trigger().then(() => {
+                done();
+            });
+        })
+    })
 });
