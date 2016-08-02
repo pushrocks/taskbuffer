@@ -1,6 +1,6 @@
 import "typings-test";
 import taskbuffer = require("../dist/index");
-let should = require("should");
+import should = require("should");
 import q = require("q")
 
 // setup some testData to work with
@@ -156,5 +156,47 @@ describe("taskbuffer", function () {
                 done();
             });
         })
+    });
+    describe("some flowtests",function(){
+        let flowTask1 = new taskbuffer.Task({
+            taskFunction: (x:number) => {
+                let done = q.defer();
+                console.log("flowTask1");
+                console.log(x);
+                done.resolve(x);
+                return done.promise;
+            }
+        });
+        let flowTask2 = new taskbuffer.Task({
+            taskFunction: (x:number) => {
+                let done = q.defer();
+                console.log("flowTask2");
+                console.log(x);
+                done.resolve(x);
+                return done.promise;
+            },
+            preTask:flowTask1
+        });
+        let flowTask3 = new taskbuffer.Taskchain({
+            taskArray:[flowTask1,flowTask2];
+        });
+        it("should let a value flow through a task",function(done){
+            flowTask1.trigger(12).then((x) => {
+                should.equal(x,12);
+                done();
+            }).catch(done);
+        });
+        it("should let a values flow between tasks",function(done){
+            flowTask2.trigger(12).then((x) => {
+                should.equal(x,12);
+                done();
+            }).catch(done);
+        });
+        it("should let a values flow between tasks in Taskchain",function(done){
+            flowTask3.trigger(12).then((x) => {
+                should.equal(x,12);
+                done();
+            }).catch(done);
+        });
     })
 });

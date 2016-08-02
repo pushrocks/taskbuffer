@@ -4,8 +4,9 @@ import { Task, ITaskFunction } from "./taskbuffer.classes.task";
 export declare let emptyTaskFunction: ITaskFunction;
 export declare let isTask: (taskArg: any) => boolean;
 export declare let isTaskTouched: (taskArg: Task, touchedTasksArray: Task[]) => boolean;
-export declare let runTask: (taskArg: Task, optionsArg?: {
-    touchedTasksArray: Task[];
+export declare let runTask: (taskArg: Task, optionsArg: {
+    x?: any;
+    touchedTasksArray?: Task[];
 }) => plugins.Q.Promise<{}>;
 export interface cycleObject {
     cycleCounter: number;
@@ -24,7 +25,7 @@ export declare class BufferRunner {
     bufferMax: number;
     running: boolean;
     constructor(taskArg: Task);
-    private _run();
+    private _run(x);
     setBufferMax(bufferMaxArg: number): void;
-    trigger(): PromiseLike<any>;
+    trigger(x: any): PromiseLike<any>;
 }

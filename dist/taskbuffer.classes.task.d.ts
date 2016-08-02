@@ -1,12 +1,10 @@
-/// <reference types="q" />
-import * as plugins from "./taskbuffer.plugins";
 import * as helpers from "./taskbuffer.classes.helpers";
 export interface ITaskFunction {
-    (): PromiseLike<any>;
+    (x?: any): PromiseLike<any>;
 }
 export declare class Task {
     name: string;
-    task: any;
+    taskFunction: ITaskFunction;
     buffered: boolean;
     preTask: Task;
     afterTask: Task;
@@ -26,14 +24,14 @@ export declare class Task {
     /**
      * trigger the task. Will trigger buffered if this.buffered is true
      */
-    trigger(): plugins.Q.Promise<{}>;
+    trigger(x?: any): PromiseLike<any>;
     /**
      * trigger task unbuffered.
      */
-    triggerUnBuffered(): PromiseLike<any>;
+    triggerUnBuffered(x?: any): PromiseLike<any>;
     /**
      * trigger task buffered.
      */
-    triggerBuffered(): PromiseLike<any>;
+    triggerBuffered(x?: any): PromiseLike<any>;
     state: string;
 }

@@ -1,7 +1,7 @@
 import plugins = require("./taskbuffer.plugins");
 import { Task, ITaskFunction } from "./taskbuffer.classes.task";
 
-export let emptyTaskFunction: ITaskFunction = function () {
+export let emptyTaskFunction: ITaskFunction = function (x) {
     let done = plugins.Q.defer();
     done.resolve();
     return done.promise;
@@ -29,42 +29,49 @@ export let isTaskTouched = (taskArg: Task, touchedTasksArray: Task[]): boolean =
     return result;
 }
 
-export let runTask = function (taskArg: Task, optionsArg: { touchedTasksArray: Task[] } = { touchedTasksArray: [] }) {
+export let runTask = function (taskArg: Task, optionsArg: {x?, touchedTasksArray?: Task[] }) {
     let done = plugins.Q.defer();
+    
+    //  set running params
     taskArg.running = true;
     done.promise.then(function () { taskArg.running = false });
-    let localDeferred = plugins.Q.defer();
-    let touchedTasksArray: Task[];
-    if (optionsArg.touchedTasksArray) {
-        touchedTasksArray = optionsArg.touchedTasksArray;
-    } else {
-        touchedTasksArray = [];
-    }
+
+    // handle options
+    let options = plugins.lodash.merge(
+        {x:undefined,touchedTasksArray: []},
+        optionsArg
+    )
+    let x = options.x;
+    let touchedTasksArray: Task[] = options.touchedTasksArray;
+    
     touchedTasksArray.push(taskArg);
+    
+    // run the task cascade
+    let localDeferred = plugins.Q.defer();
     localDeferred.promise
         .then(() => {
             if (taskArg.preTask && !isTaskTouched(taskArg.preTask, touchedTasksArray)) {
-                return runTask(taskArg.preTask, { touchedTasksArray: touchedTasksArray })
+                return runTask(taskArg.preTask, {x:x, touchedTasksArray: touchedTasksArray })
             } else {
                 let done2 = plugins.Q.defer();
-                done2.resolve();
+                done2.resolve(x);
                 return done2.promise;
             }
         })
-        .then(() => {
-            return taskArg.task();
+        .then(x => {
+            return taskArg.taskFunction(x);
         })
-        .then(() => {
+        .then(x => {
             if (taskArg.afterTask && !isTaskTouched(taskArg.afterTask, touchedTasksArray)) {
-                return runTask(taskArg.afterTask, { touchedTasksArray: touchedTasksArray })
+                return runTask(taskArg.afterTask, {x:x, touchedTasksArray: touchedTasksArray });
             } else {
                 let done2 = plugins.Q.defer();
-                done2.resolve();
+                done2.resolve(x);
                 return done2.promise;
             }
         })
-        .then(() => {
-            done.resolve();
+        .then(x => {
+            done.resolve(x);
         });
     localDeferred.resolve();
     return done.promise;
@@ -114,34 +121,34 @@ export class BufferRunner {
     constructor(taskArg: Task) {
         this.task = taskArg;
     };
-    private _run() {
-        let recursiveBufferRunner = () => {
+    private _run(x) {
+        let recursiveBufferRunner = (x) => {
             if (this.bufferCounter >= 0) {
                 this.running = true;
                 this.task.running = true;
-                runTask(this.task)
-                    .then(() => {
+                runTask(this.task,{x:x})
+                    .then((x) => {
                         this.bufferCounter--;
                         this.task.cycleCounter.informOfCycle();
-                        recursiveBufferRunner();
+                        recursiveBufferRunner(x);
                     });
             } else {
                 this.running = false;
                 this.task.running = false;
             }
         };
-        recursiveBufferRunner();
+        recursiveBufferRunner(x);
     };
     setBufferMax(bufferMaxArg:number){
         this.bufferMax = bufferMaxArg;
     };
-    trigger(): PromiseLike<any> {
+    trigger(x): PromiseLike<any> {
         if(!(this.bufferCounter >= this.bufferMax)){
             this.bufferCounter++
         };
         let returnPromise:PromiseLike<any> = this.task.cycleCounter.getPromiseForCycle(this.bufferCounter + 1);
         if(!this.running){
-            this._run();
+            this._run(x);
         }
         return returnPromise;
     };

@@ -6,9 +6,11 @@ export class Taskchain extends Task {
     taskArray:Task[];
     private _oraObject:plugins.beautylog.Ora;
     constructor(optionsArg:{
+        taskArray:Task[],
         name?:string,
         log?:boolean,
-        taskArray:Task[]
+        buffered?:boolean,
+        bufferMax?:number
     }){
         let options = plugins.lodash.merge(
             {
@@ -17,24 +19,24 @@ export class Taskchain extends Task {
             },
             optionsArg,
             {
-                taskFunction: () => { // this is the function that gets executed when TaskChain is triggered
+                taskFunction: (x:any) => { // this is the function that gets executed when TaskChain is triggered
                     let done = plugins.Q.defer(); // this is the starting Deferred object 
-                    let taskCounter = 0;
-                    let iterateTasks = () => {
+                    let taskCounter = 0; // counter for iterating async over the taskArray
+                    let iterateTasks = (x) => {
                         if(typeof this.taskArray[taskCounter] != "undefined"){
                             this._oraObject.text(this.name + " running: Task" + this.taskArray[taskCounter].name);
-                            this.taskArray[taskCounter].trigger()
-                                .then(()=>{
+                            this.taskArray[taskCounter].trigger(x)
+                                .then((x)=>{
                                     plugins.beautylog.ok(this.taskArray[taskCounter].name);
                                     taskCounter++;
-                                    iterateTasks();
+                                    iterateTasks(x);
                                 });     
                         } else {
                             this._oraObject.endOk("Taskchain \"" + this.name +  "\" completed successfully");
-                            done.resolve();
+                            done.resolve(x);
                         }
                     };
-                    iterateTasks();
+                    iterateTasks(x);
                     return done.promise;
                 }
             }
@@ -55,8 +57,4 @@ export class Taskchain extends Task {
     shiftTask(){
         
     };
-    trigger(){
-        this._oraObject.start(this.name + " running...");
-        return helpers.runTask(this);
-    }
 };

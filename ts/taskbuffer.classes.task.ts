@@ -3,12 +3,12 @@ import * as helpers from "./taskbuffer.classes.helpers"
 
 
 export interface ITaskFunction {
-    ():PromiseLike<any>;
+    (x?:any):PromiseLike<any>;
 }
 
 export class Task {
     name:string;
-    task:any;
+    taskFunction:ITaskFunction;
     buffered:boolean;
     preTask:Task;
     afterTask:Task;
@@ -29,7 +29,7 @@ export class Task {
         name?:string
     }){
         var options = optionsArg;
-        this.task = optionsArg.taskFunction;
+        this.taskFunction = optionsArg.taskFunction;
         this.preTask = options.preTask;
         this.afterTask = options.afterTask;
         this.idle = !this.running;
@@ -41,31 +41,27 @@ export class Task {
     /**
      * trigger the task. Will trigger buffered if this.buffered is true
      */
-    trigger(){
-        let done = plugins.Q.defer();
+    trigger(x?):PromiseLike<any> {
         if(this.buffered) {
-            this.triggerBuffered()
-                .then(done.resolve);
+            return this.triggerBuffered(x)
         }
         else {
-            this.triggerUnBuffered()
-                .then(done.resolve);
+            return this.triggerUnBuffered(x);
         };
-        return done.promise;
     };
 
     /**
      * trigger task unbuffered.
      */
-    triggerUnBuffered():PromiseLike<any>{
-        return helpers.runTask(this);
+    triggerUnBuffered(x?):PromiseLike<any>{
+        return helpers.runTask(this,{x:x});
     }
     
     /**
      * trigger task buffered.
      */
-    triggerBuffered():PromiseLike<any>{
-        return this.bufferRunner.trigger();
+    triggerBuffered(x?):PromiseLike<any>{
+        return this.bufferRunner.trigger(x);
     }
 
     get state():string {
