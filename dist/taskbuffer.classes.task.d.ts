@@ -1,4 +1,7 @@
+/// <reference types="q" />
 import * as helpers from "./taskbuffer.classes.helpers";
+import { Promise } from "q";
+export { Promise } from "q";
 export interface ITaskFunction {
     (x?: any): PromiseLike<any>;
 }
@@ -24,14 +27,14 @@ export declare class Task {
     /**
      * trigger the task. Will trigger buffered if this.buffered is true
      */
-    trigger(x?: any): PromiseLike<any>;
+    trigger(x?: any): Promise<any>;
     /**
      * trigger task unbuffered.
      */
-    triggerUnBuffered(x?: any): PromiseLike<any>;
+    triggerUnBuffered(x?: any): Promise<any>;
     /**
      * trigger task buffered.
      */
-    triggerBuffered(x?: any): PromiseLike<any>;
+    triggerBuffered(x?: any): Promise<any>;
     state: string;
 }

@@ -1,6 +1,9 @@
 import * as plugins from "./taskbuffer.plugins"
 import * as helpers from "./taskbuffer.classes.helpers"
 
+//interfaces
+import {Promise} from "q";
+export {Promise} from "q";
 
 export interface ITaskFunction {
     (x?:any):PromiseLike<any>;
@@ -41,7 +44,7 @@ export class Task {
     /**
      * trigger the task. Will trigger buffered if this.buffered is true
      */
-    trigger(x?):PromiseLike<any> {
+    trigger(x?):Promise<any> {
         if(this.buffered) {
             return this.triggerBuffered(x)
         }
@@ -53,14 +56,14 @@ export class Task {
     /**
      * trigger task unbuffered.
      */
-    triggerUnBuffered(x?):PromiseLike<any>{
+    triggerUnBuffered(x?):Promise<any>{
         return helpers.runTask(this,{x:x});
     }
     
     /**
      * trigger task buffered.
      */
-    triggerBuffered(x?):PromiseLike<any>{
+    triggerBuffered(x?):Promise<any>{
         return this.bufferRunner.trigger(x);
     }
 

@@ -167,6 +167,19 @@ describe("taskbuffer", function () {
                 return done.promise;
             }
         });
+
+        let flowTaskBuffered = new taskbuffer.Task({
+            taskFunction: (x:number) => {
+                let done = q.defer();
+                console.log("flowTask1");
+                console.log(x);
+                done.resolve(x);
+                return done.promise;
+            },
+            buffered:true,
+            bufferMax: 1
+        });
+
         let flowTask2 = new taskbuffer.Task({
             taskFunction: (x:number) => {
                 let done = q.defer();
@@ -178,7 +191,7 @@ describe("taskbuffer", function () {
             preTask:flowTask1
         });
         let flowTask3 = new taskbuffer.Taskchain({
-            taskArray:[flowTask1,flowTask2];
+            taskArray:[flowTask1,flowTask2]
         });
         it("should let a value flow through a task",function(done){
             flowTask1.trigger(12).then((x) => {
@@ -192,6 +205,14 @@ describe("taskbuffer", function () {
                 done();
             }).catch(done);
         });
+
+        it("should let a values flow between tasks when buffered",function(done){
+            flowTaskBuffered.trigger(12).then((x) => {
+                should.equal(x,12);
+                done();
+            }).catch(done);
+        });
+
         it("should let a values flow between tasks in Taskchain",function(done){
             flowTask3.trigger(12).then((x) => {
                 should.equal(x,12);
