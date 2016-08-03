@@ -72,6 +72,8 @@ export let runTask = function (taskArg: Task, optionsArg: {x?, touchedTasksArray
         })
         .then(x => {
             done.resolve(x);
+        }).catch((err) => {
+            console.log(err);
         });
     localDeferred.resolve();
     return done.promise;
