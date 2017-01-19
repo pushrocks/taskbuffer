@@ -25,16 +25,16 @@
   "homepage": "https://gitlab.com/pushrocks/taskbuffer#readme",
   "dependencies": {
     "@types/lodash": "4.x.x",
-    "@types/q": "0.x.x",
-    "beautylog": "^5.0.23",
-    "lodash": "^4.15.0",
+    "beautylog": "^6.0.0",
+    "lodash": "^4.17.4",
     "q": "^1.4.1",
-    "rxjs": "^5.0.0-beta.11",
+    "rxjs": "^5.0.3",
+    "smartq": "^1.0.2",
     "typings-global": "^1.0.14"
   },
   "devDependencies": {
-    "npmts-g": "^5.2.8",
-    "should": "^11.1.0",
-    "typings-test": "^1.0.2"
+    "npmts-g": "^5.2.10",
+    "should": "^11.1.2",
+    "typings-test": "^1.0.3"
   }
 }

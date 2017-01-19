@@ -1,19 +1,16 @@
 import plugins = require("./taskbuffer.plugins");
 import { Task, ITaskFunction } from "./taskbuffer.classes.task";
 
-import {Promise} from "q";
-export {Promise} from "q";
-
 export let emptyTaskFunction: ITaskFunction = function (x) {
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
     done.resolve();
     return done.promise;
 };
 
-export let isTask = function (taskArg): boolean {
+export let isTask = function (taskArg: Task): boolean {
     if (
         taskArg instanceof Task
-        && typeof taskArg.task === "function"
+        && typeof taskArg.taskFunction === "function"
     ) {
         return true;
     } else {
@@ -33,7 +30,7 @@ export let isTaskTouched = (taskArg: Task, touchedTasksArray: Task[]): boolean =
 }
 
 export let runTask = function (taskArg: Task, optionsArg: {x?, touchedTasksArray?: Task[] }) {
-    let done = plugins.Q.defer();
+    let done = plugins.q.defer();
     
     //  set running params
     taskArg.running = true;
@@ -50,13 +47,13 @@ export let runTask = function (taskArg: Task, optionsArg: {x?, touchedTasksArray
     touchedTasksArray.push(taskArg);
     
     // run the task cascade
-    let localDeferred = plugins.Q.defer();
+    let localDeferred = plugins.q.defer();
     localDeferred.promise
         .then(() => {
             if (taskArg.preTask && !isTaskTouched(taskArg.preTask, touchedTasksArray)) {
                 return runTask(taskArg.preTask, {x:x, touchedTasksArray: touchedTasksArray })
             } else {
-                let done2 = plugins.Q.defer();
+                let done2 = plugins.q.defer();
                 done2.resolve(x);
                 return done2.promise;
             }
@@ -68,7 +65,7 @@ export let runTask = function (taskArg: Task, optionsArg: {x?, touchedTasksArray
             if (taskArg.afterTask && !isTaskTouched(taskArg.afterTask, touchedTasksArray)) {
                 return runTask(taskArg.afterTask, {x:x, touchedTasksArray: touchedTasksArray });
             } else {
-                let done2 = plugins.Q.defer();
+                let done2 = plugins.q.defer();
                 done2.resolve(x);
                 return done2.promise;
             }
@@ -85,7 +82,7 @@ export let runTask = function (taskArg: Task, optionsArg: {x?, touchedTasksArray
 
 export interface cycleObject {
     cycleCounter:number,
-    deferred:plugins.Q.Deferred<any>
+    deferred: plugins.q.Deferred<any>
 }
 
 export class CycleCounter {
@@ -95,7 +92,7 @@ export class CycleCounter {
         this.task = taskArg;
     };
     getPromiseForCycle(cycleCountArg:number){
-        let done = plugins.Q.defer();
+        let done = plugins.q.defer();
         let cycleObject:cycleObject = {
             cycleCounter:cycleCountArg,
             deferred:done

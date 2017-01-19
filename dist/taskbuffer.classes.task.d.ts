@@ -1,7 +1,4 @@
-/// <reference types="q" />
 import * as helpers from "./taskbuffer.classes.helpers";
-import { Promise } from "q";
-export { Promise } from "q";
 export interface ITaskFunction {
     (x?: any): PromiseLike<any>;
 }
