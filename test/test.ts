@@ -148,7 +148,7 @@ describe("taskbuffer", function () {
     });
     describe("taskparallel", function () {
         it("should run in Parallel", function (done) {
-            this.timeout("7000");
+            this.timeout(7000);
             let testTaskparallel = new taskbuffer.Taskparallel({
                 taskArray: [task1, task2, task3]
             });
