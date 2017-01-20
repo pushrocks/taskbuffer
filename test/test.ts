@@ -78,7 +78,7 @@ describe("taskbuffer", function () {
             testTask = new taskbuffer.Task({ taskFunction: testTaskFunction, preTask: testPreTask });
         });
         it("testTask should be and instance of Task", function () {
-            testTask.should.be.instanceof(taskbuffer.Task);
+            should(testTask).be.instanceof(taskbuffer.Task);
         });
         it("testTask.idle is true", function () {
             if (!testTask.idle) {
@@ -87,11 +87,11 @@ describe("taskbuffer", function () {
 
         });
         it("testTask.running is type boolean and initially false", function () {
-            testTask.running.should.be.type("boolean");
-            testTask.running.should.be.false();
+            should(testTask.running).be.type("boolean");
+            should(testTask.running).be.false();
         });
         it("testTask.trigger() should return Promise", function () {
-            testTask.trigger().should.be.Promise();
+            should(testTask.trigger()).be.Promise();
         });
         it("testTask.trigger() returned Promise should be fullfilled", function (done) {
             testTask.trigger()
