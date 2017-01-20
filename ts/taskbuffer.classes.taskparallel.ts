@@ -11,12 +11,12 @@ export class Taskparallel extends Task {
             optionsArg,
             {
                 taskFunction: () => {
-                    let done = plugins.Q.defer();
-                    let promiseArray:PromiseLike<any>[] = []; // stores promises of all tasks, since they run in parallel
+                    let done = plugins.q.defer();
+                    let promiseArray: Promise<any>[] = []; // stores promises of all tasks, since they run in parallel
                     this.taskArray.forEach(function (taskArg) {
                         promiseArray.push(taskArg.trigger());
                     })
-                    plugins.Q.all(promiseArray)
+                    Promise.all(promiseArray)
                         .then(done.resolve);
                     return done.promise;
                 }

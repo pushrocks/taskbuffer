@@ -20,7 +20,7 @@ export class Taskchain extends Task {
             optionsArg,
             {
                 taskFunction: (x:any) => { // this is the function that gets executed when TaskChain is triggered
-                    let done = plugins.Q.defer(); // this is the starting Deferred object 
+                    let done = plugins.q.defer(); // this is the starting Deferred object 
                     let taskCounter = 0; // counter for iterating async over the taskArray
                     let iterateTasks = (x) => {
                         if(typeof this.taskArray[taskCounter] != "undefined"){
