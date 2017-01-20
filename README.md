@@ -1,8 +1,22 @@
 # taskbuffer
 flexible task management. TypeScript ready!
 
-## Status
-[![Coverage Status](https://coveralls.io/repos/github/pushrocks/taskbuffer/badge.svg?branch=master)](https://coveralls.io/github/pushrocks/taskbuffer?branch=master)
+## Availabililty
+[![npm](https://push.rocks/assets/repo-button-npm.svg)](https://www.npmjs.com/package/taskbuffer)
+[![git](https://push.rocks/assets/repo-button-git.svg)](https://GitLab.com/pushrocks/taskbuffer)
+[![git](https://push.rocks/assets/repo-button-mirror.svg)](https://github.com/pushrocks/taskbuffer)
+[![docs](https://push.rocks/assets/repo-button-docs.svg)](https://pushrocks.gitlab.io/taskbuffer/)
+
+## Status for master
+[![build status](https://GitLab.com/pushrocks/taskbuffer/badges/master/build.svg)](https://GitLab.com/pushrocks/taskbuffer/commits/master)
+[![coverage report](https://GitLab.com/pushrocks/taskbuffer/badges/master/coverage.svg)](https://GitLab.com/pushrocks/taskbuffer/commits/master)
+[![npm downloads per month](https://img.shields.io/npm/dm/taskbuffer.svg)](https://www.npmjs.com/package/taskbuffer)
+[![Dependency Status](https://david-dm.org/pushrocks/taskbuffer.svg)](https://david-dm.org/pushrocks/taskbuffer)
+[![bitHound Dependencies](https://www.bithound.io/github/pushrocks/taskbuffer/badges/dependencies.svg)](https://www.bithound.io/github/pushrocks/taskbuffer/master/dependencies/npm)
+[![bitHound Code](https://www.bithound.io/github/pushrocks/taskbuffer/badges/code.svg)](https://www.bithound.io/github/pushrocks/taskbuffer)
+[![TypeScript](https://img.shields.io/badge/TypeScript-2.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
+[![node](https://img.shields.io/badge/node->=%206.x.x-blue.svg)](https://nodejs.org/dist/latest-v6.x/docs/api/)
+[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## Install
 
@@ -40,7 +54,7 @@ npm install taskbuffer --save
 
 ### Usage
 We highly recommend TypeScript as this module supports **TypeScript intellisense**.
-```
+```javascript
 import * as taskbuffer from "taskbuffer";
 
 myTask = new taskbuffer.Task({
@@ -54,3 +68,5 @@ myTask = new taskbuffer.Task({
   }
 })
 ```
+
+[![npm](https://push.rocks/assets/repo-header.svg)](https://push.rocks)

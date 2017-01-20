@@ -13,9 +13,10 @@
   },
   "keywords": [
     "gulp",
-    "tasks",
-    "watch",
-    "buffer"
+    "task",
+    "buffer",
+    "TypeScript",
+    "push.rocks"
   ],
   "author": "Lossless GmbH",
   "license": "MIT",
