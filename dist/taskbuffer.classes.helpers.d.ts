@@ -1,5 +1,5 @@
-import plugins = require("./taskbuffer.plugins");
-import { Task, ITaskFunction } from "./taskbuffer.classes.task";
+import plugins = require('./taskbuffer.plugins');
+import { Task, ITaskFunction } from './taskbuffer.classes.task';
 export declare let emptyTaskFunction: ITaskFunction;
 export declare let isTask: (taskArg: Task) => boolean;
 export declare let isTaskTouched: (taskArg: Task, touchedTasksArray: Task[]) => boolean;

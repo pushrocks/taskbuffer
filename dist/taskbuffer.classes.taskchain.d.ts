@@ -1,4 +1,4 @@
-import { Task } from "./taskbuffer.classes.task";
+import { Task } from './taskbuffer.classes.task';
 export declare class Taskchain extends Task {
     taskArray: Task[];
     private _oraObject;

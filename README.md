@@ -2,10 +2,10 @@
 flexible task management. TypeScript ready!
 
 ## Availabililty
-[![npm](https://push.rocks/assets/repo-button-npm.svg)](https://www.npmjs.com/package/taskbuffer)
-[![git](https://push.rocks/assets/repo-button-git.svg)](https://GitLab.com/pushrocks/taskbuffer)
-[![git](https://push.rocks/assets/repo-button-mirror.svg)](https://github.com/pushrocks/taskbuffer)
-[![docs](https://push.rocks/assets/repo-button-docs.svg)](https://pushrocks.gitlab.io/taskbuffer/)
+[![npm](https://pushrocks.gitlab.io/assets/repo-button-npm.svg)](https://www.npmjs.com/package/taskbuffer)
+[![git](https://pushrocks.gitlab.io/assets/repo-button-git.svg)](https://GitLab.com/pushrocks/taskbuffer)
+[![git](https://pushrocks.gitlab.io/assets/repo-button-mirror.svg)](https://github.com/pushrocks/taskbuffer)
+[![docs](https://pushrocks.gitlab.io/assets/repo-button-docs.svg)](https://pushrocks.gitlab.io/taskbuffer/)
 
 ## Status for master
 [![build status](https://GitLab.com/pushrocks/taskbuffer/badges/master/build.svg)](https://GitLab.com/pushrocks/taskbuffer/commits/master)
@@ -69,4 +69,8 @@ myTask = new taskbuffer.Task({
 })
 ```
 
-[![npm](https://push.rocks/assets/repo-header.svg)](https://push.rocks)
+For further information read the linked docs at the top of this README.
+
+> MIT licensed | **&copy;** [Lossless GmbH](https://lossless.gmbh)
+
+[![repo-footer](https://pushrocks.gitlab.io/assets/repo-footer.svg)](https://push.rocks)

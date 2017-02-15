@@ -1,4 +1,4 @@
-import * as helpers from "./taskbuffer.classes.helpers";
+import * as helpers from './taskbuffer.classes.helpers';
 export interface ITaskFunction {
     (x?: any): PromiseLike<any>;
 }
