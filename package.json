@@ -26,15 +26,13 @@
   "homepage": "https://gitlab.com/pushrocks/taskbuffer#readme",
   "dependencies": {
     "@types/lodash": "4.x.x",
-    "beautylog": "^6.1.1",
+    "beautylog": "^6.1.10",
     "lodash": "^4.17.4",
-    "rxjs": "^5.1.1",
+    "rxjs": "^5.4.0",
     "smartq": "^1.1.1",
-    "typings-global": "^1.0.14"
+    "typings-global": "^1.0.17"
   },
   "devDependencies": {
-    "npmts-g": "^6.0.0",
-    "smartchai": "^1.0.1",
-    "typings-test": "^1.0.3"
+    "tapbundle": "^1.0.14"
   }
 }
