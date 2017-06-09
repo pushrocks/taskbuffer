@@ -24,7 +24,7 @@ export declare class BufferRunner {
     bufferMax: number;
     running: boolean;
     constructor(taskArg: Task);
-    private _run(x);
     setBufferMax(bufferMaxArg: number): void;
     trigger(x: any): Promise<any>;
+    private _run(x);
 }

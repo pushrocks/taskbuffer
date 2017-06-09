@@ -2,11 +2,11 @@ import * as plugins from './taskbuffer.plugins'
 import * as helpers from './taskbuffer.classes.helpers'
 
 export interface ITaskFunction {
-  (x?: any): PromiseLike<any>;
+  (x?: any): PromiseLike<any>
 }
 
 export class Task {
-  name: string;
+  name: string
   taskFunction: ITaskFunction
   buffered: boolean
   preTask: Task
@@ -40,33 +40,32 @@ export class Task {
   /**
    * trigger the task. Will trigger buffered if this.buffered is true
    */
-  trigger(x?): Promise<any> {
+  trigger (x?): Promise<any> {
     if (this.buffered) {
       return this.triggerBuffered(x)
-    }
-    else {
+    } else {
       return this.triggerUnBuffered(x)
-    };
-  };
+    }
+  }
 
   /**
    * trigger task unbuffered.
    */
-  triggerUnBuffered(x?): Promise<any> {
+  triggerUnBuffered (x?): Promise<any> {
     return helpers.runTask(this, { x: x })
   }
 
   /**
    * trigger task buffered.
    */
-  triggerBuffered(x?): Promise<any> {
+  triggerBuffered (x?): Promise<any> {
     return this.bufferRunner.trigger(x)
   }
 
-  get state(): string {
+  get state (): string {
     return this._state
   }
-  set state(stateArg: string) {
+  set state (stateArg: string) {
     if (stateArg === 'locked') {
       this._state = 'locked'
     } else {

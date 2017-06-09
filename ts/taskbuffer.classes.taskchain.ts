@@ -1,6 +1,6 @@
-import * as plugins from './taskbuffer.plugins';
-import { Task } from './taskbuffer.classes.task';
-import helpers = require('./taskbuffer.classes.helpers');
+import * as plugins from './taskbuffer.plugins'
+import { Task } from './taskbuffer.classes.task'
+import helpers = require('./taskbuffer.classes.helpers')
 
 export class Taskchain extends Task {
   taskArray: Task[]
@@ -46,15 +46,15 @@ export class Taskchain extends Task {
     this._oraObject = plugins.beautylog.ora
     if (optionsArg.log === true) {
       this._oraObject.start()
-    };
+    }
   }
-  addTask(taskArg: Task) {
+  addTask (taskArg: Task) {
     this.taskArray.push(taskArg)
-  };
-  removeTask(taskArg: Task) {
-    // TODO
-  };
-  shiftTask() {
-
-  };
+  }
+  removeTask (taskArg: Task) {
+    // TODO:
+  }
+  shiftTask () {
+    // TODO:
+  }
 }

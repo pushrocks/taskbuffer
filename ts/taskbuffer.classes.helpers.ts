@@ -1,4 +1,4 @@
-import plugins = require('./taskbuffer.plugins');
+import plugins = require('./taskbuffer.plugins')
 import { Task, ITaskFunction } from './taskbuffer.classes.task'
 
 export let emptyTaskFunction: ITaskFunction = function (x) {
@@ -17,7 +17,6 @@ export let isTask = function (taskArg: Task): boolean {
     return false
   }
 }
-
 
 export let isTaskTouched = (taskArg: Task, touchedTasksArray: Task[]): boolean => {
   let result = false
@@ -79,7 +78,6 @@ export let runTask = function (taskArg: Task, optionsArg: { x?, touchedTasksArra
   return done.promise
 }
 
-
 export interface cycleObject {
   cycleCounter: number,
   deferred: plugins.q.Deferred<any>
@@ -90,8 +88,8 @@ export class CycleCounter {
   cycleObjectArray: cycleObject[] = []
   constructor(taskArg: Task) {
     this.task = taskArg
-  };
-  getPromiseForCycle(cycleCountArg: number) {
+  }
+  getPromiseForCycle (cycleCountArg: number) {
     let done = plugins.q.defer()
     let cycleObject: cycleObject = {
       cycleCounter: cycleCountArg,
@@ -99,8 +97,8 @@ export class CycleCounter {
     }
     this.cycleObjectArray.push(cycleObject)
     return done.promise
-  };
-  informOfCycle(x) {
+  }
+  informOfCycle (x) {
     let newCycleObjectArray: cycleObject[] = []
     this.cycleObjectArray.forEach(cycleObjectArg => {
       cycleObjectArg.cycleCounter--
@@ -108,7 +106,7 @@ export class CycleCounter {
         cycleObjectArg.deferred.resolve(x)
       } else {
         newCycleObjectArray.push(cycleObjectArg)
-      };
+      }
     })
     this.cycleObjectArray = newCycleObjectArray
   }
@@ -122,8 +120,24 @@ export class BufferRunner {
   running: boolean = false
   constructor(taskArg: Task) {
     this.task = taskArg
-  };
-  private _run(x) {
+  }
+
+  setBufferMax (bufferMaxArg: number) {
+    this.bufferMax = bufferMaxArg
+  }
+
+  trigger (x): Promise<any> {
+    if (!(this.bufferCounter >= this.bufferMax)) {
+      this.bufferCounter++
+    }
+    let returnPromise: Promise<any> = this.task.cycleCounter.getPromiseForCycle(this.bufferCounter + 1)
+    if (!this.running) {
+      this._run(x)
+    }
+    return returnPromise
+  }
+
+  private _run (x) {
     let recursiveBufferRunner = (x) => {
       if (this.bufferCounter >= 0) {
         this.running = true
@@ -140,18 +154,6 @@ export class BufferRunner {
       }
     }
     recursiveBufferRunner(x)
-  };
-  setBufferMax(bufferMaxArg: number) {
-    this.bufferMax = bufferMaxArg
-  };
-  trigger(x): Promise<any> {
-    if (!(this.bufferCounter >= this.bufferMax)) {
-      this.bufferCounter++
-    };
-    let returnPromise: Promise<any> = this.task.cycleCounter.getPromiseForCycle(this.bufferCounter + 1)
-    if (!this.running) {
-      this._run(x)
-    }
-    return returnPromise
-  };
-};
+  }
+
+}
