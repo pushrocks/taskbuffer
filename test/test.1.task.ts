@@ -63,37 +63,37 @@ tap.test('new Task() should return a new task', async () => {
   testTask = new taskbuffer.Task({ taskFunction: async () => { console.log('executed twice') }, preTask: testPreTask })
 })
 
-tap.test('testTask should be and instance of Task', async () => {
+tap.test('expect testTask to be an instance of Task', async () => {
   expect(testTask).to.be.instanceof(taskbuffer.Task)
 })
 
-tap.test('testTask.idle is true', async () => {
+tap.test('expect testTask.idle is true', async () => {
   if (!testTask.idle) {
     throw new Error('testTask.idle is not true')
   }
 
 })
 
-tap.test('testTask.running is type boolean and initially false', async () => {
+tap.test('testTask.running should be of type boolean and initially false', async () => {
   expect(testTask.running).to.be.a('boolean')
   // tslint:disable-next-line:no-unused-expression
   expect(testTask.running).to.be.false
 })
 
-tap.test('testTask.trigger() expect return Promise', async () => {
+tap.test('testTask.trigger() should return Promise', async () => {
   expect(testTask.trigger()).to.be.instanceof(Promise)
 })
 
-tap.test('testTask.trigger() returned Promise expect be fullfilled', async () => {
+tap.test('testTask.trigger() returned Promise should be fullfilled', async () => {
   await testTask.trigger()
 })
 
-tap.test('expect run a task without pre and afterTask', async () => {
+tap.test('expect to run a task without pre and afterTask errorless', async () => {
   let localTestTask = new taskbuffer.Task({ taskFunction: async () => { console.log('only once') } })
   await localTestTask.trigger()
 })
 
-tap.test('expect run buffered', async () => {
+tap.test('expect task to run in buffered mode', async () => {
   let localTestTask = new taskbuffer.Task({
     taskFunction: async () => { await smartdelay.delayFor(3000) },
     buffered: true,

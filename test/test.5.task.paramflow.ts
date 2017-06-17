@@ -46,17 +46,17 @@ tap.test('should let a value flow through a task', async () => {
   expect(result).to.equal(12)
 })
 
-tap.test('should let a values flow between tasks', async () => {
+tap.test('expect values to flow between tasks', async () => {
   let result = await flowTask2.trigger(12)
   expect(result).to.equal(12)
 })
 
-tap.test('expect let a values flow between tasks when buffered', async () => {
+tap.test('expect values to flow between tasks when buffered', async () => {
   let result = await flowTaskBuffered.trigger(12)
   expect(result).to.equal(12)
 })
 
-tap.test('should let a values flow between tasks in Taskchain', async () => {
+tap.test('expect values to flow between tasks in Taskchain', async () => {
   let result = await flowTask3.trigger(12)
   expect(result).to.equal(12)
 })
