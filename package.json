@@ -25,10 +25,14 @@
   },
   "homepage": "https://gitlab.com/pushrocks/taskbuffer#readme",
   "dependencies": {
+    "@types/cron": "^1.2.1",
     "@types/lodash": "4.x.x",
     "beautylog": "^6.1.10",
+    "cron": "^1.2.1",
+    "lik": "^1.0.31",
     "lodash": "^4.17.4",
-    "rxjs": "^5.4.0",
+    "rxjs": "^5.4.1",
+    "smartdelay": "^1.0.3",
     "smartq": "^1.1.1",
     "typings-global": "^1.0.17"
   },

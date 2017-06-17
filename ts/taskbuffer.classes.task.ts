@@ -19,7 +19,7 @@ export class Task {
   idle: boolean = true
   private _state: string = 'ready'
 
-  constructor(optionsArg: {
+  constructor (optionsArg: {
     taskFunction: ITaskFunction,
     preTask?: Task,
     afterTask?: Task,

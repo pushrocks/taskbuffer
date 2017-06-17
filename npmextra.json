@@ -1,6 +1,9 @@
 {
   "npmts":{
-    "mode":"default"
+    "mode":"default",
+    "testConfig": {
+      "parallel": false
+    }
   },
   "npmci": {
     "globalNpmTools": [

@@ -1,3 +1,6 @@
+// TaskChain chains tasks
+// and extends Task
+
 import * as plugins from './taskbuffer.plugins'
 import { Task } from './taskbuffer.classes.task'
 import helpers = require('./taskbuffer.classes.helpers')
