@@ -2,7 +2,7 @@ import { Task } from './taskbuffer.classes.task';
 import { Objectmap } from 'lik';
 export declare class TaskManager {
     taskMap: Objectmap<Task>;
-    private cronJobArray;
+    private cronJobMap;
     constructor();
     /**
      * checks if a task is already present
@@ -24,12 +24,13 @@ export declare class TaskManager {
      * triggers a task in the TaskManagerByName
      * @param taskNameArg
      */
-    triggerTaskByName(taskNameArg: string): void;
+    triggerTaskByName(taskNameArg: string): Promise<any>;
     /**
      * schedules the task by name
      * @param taskNameArg
      */
     scheduleTaskByName(taskNameArg: string, cronStringArg: string): void;
+    descheduleTaskByName(taskNameArg: string): void;
     /**
      * returns all schedules of a specific task
      * @param taskNameArg

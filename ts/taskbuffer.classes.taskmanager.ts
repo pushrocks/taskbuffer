@@ -6,7 +6,7 @@ import { Objectmap } from 'lik'
 
 export class TaskManager {
   taskMap = new plugins.lik.Objectmap<Task>()
-  private cronJobArray: ICronJob[] = []
+  private cronJobMap = new plugins.lik.Objectmap<ICronJob>()
   constructor () {
     // nothing here
   }
@@ -47,12 +47,12 @@ export class TaskManager {
    * triggers a task in the TaskManagerByName
    * @param taskNameArg
    */
-  triggerTaskByName (taskNameArg: string) {
+  triggerTaskByName (taskNameArg: string): Promise<any> {
     let taskToTrigger = this.getTaskByName(taskNameArg)
     if (!taskToTrigger) {
       throw new Error(`There is no task with the name of ${taskNameArg}`)
     }
-    taskToTrigger.trigger()
+    return taskToTrigger.trigger()
   }
 
   /**
@@ -63,16 +63,24 @@ export class TaskManager {
     let taskToSchedule = this.getTaskByName(taskNameArg)
     let job = new plugins.cron.CronJob({
       cronTime: cronStringArg,
-      onTick: taskToSchedule.trigger,
+      onTick: () => {
+        this.triggerTaskByName(taskNameArg)
+      },
       start: true
     })
-    this.cronJobArray.push({
+    this.cronJobMap.add({
       taskNameArg: taskToSchedule.name,
       cronString: cronStringArg,
       job: job
     })
   }
 
+  descheduleTaskByName (taskNameArg: string) {
+    let descheduledCron = this.cronJobMap.findOneAndRemove((itemArg) => {
+      return itemArg.taskNameArg === taskNameArg
+    })
+    descheduledCron.job.stop()
+  }
   /**
    * returns all schedules of a specific task
    * @param taskNameArg
