@@ -29,14 +29,14 @@
     "@types/lodash": "4.x.x",
     "beautylog": "^6.1.10",
     "cron": "^1.2.1",
-    "lik": "^1.0.32",
+    "lik": "^1.0.38",
     "lodash": "^4.17.4",
-    "rxjs": "^5.4.1",
+    "rxjs": "^5.4.2",
     "smartdelay": "^1.0.3",
-    "smartq": "^1.1.1",
-    "typings-global": "^1.0.17"
+    "smartq": "^1.1.6",
+    "typings-global": "^1.0.19"
   },
   "devDependencies": {
-    "tapbundle": "^1.0.14"
+    "tapbundle": "^1.1.0"
   }
 }
