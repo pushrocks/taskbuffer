@@ -1,6 +1,6 @@
 {
   "name": "taskbuffer",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "flexible task management. TypeScript ready!",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
