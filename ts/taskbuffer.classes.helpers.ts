@@ -28,12 +28,18 @@ export let isTaskTouched = (taskArg: Task, touchedTasksArray: Task[]): boolean =
   return result
 }
 
-export let runTask = function (taskArg: Task, optionsArg: { x?, touchedTasksArray?: Task[] }) {
+export let runTask = async (taskArg: Task, optionsArg: { x?, touchedTasksArray?: Task[] }) => {
   let done = plugins.q.defer()
+
+  // pay respect to execDelay
+  if (taskArg.execDelay) {
+    await plugins.smartdelay.delayFor(taskArg.execDelay)
+  }
 
   //  set running params
   taskArg.running = true
-  done.promise.then(function () { taskArg.running = false })
+
+  done.promise.then(async () => { taskArg.running = false })
 
   // handle options
   let options = plugins.lodash.merge(
@@ -75,7 +81,7 @@ export let runTask = function (taskArg: Task, optionsArg: { x?, touchedTasksArra
       console.log(err)
     })
   localDeferred.resolve()
-  return done.promise
+  return await done.promise
 }
 
 export interface cycleObject {
@@ -116,18 +122,13 @@ export class BufferRunner {
   task: Task
   // initialze by default
   bufferCounter: number = 0
-  bufferMax: number = 1
   running: boolean = false
   constructor(taskArg: Task) {
     this.task = taskArg
   }
 
-  setBufferMax (bufferMaxArg: number) {
-    this.bufferMax = bufferMaxArg
-  }
-
   trigger (x): Promise<any> {
-    if (!(this.bufferCounter >= this.bufferMax)) {
+    if (!(this.bufferCounter >= this.task.bufferMax)) {
       this.bufferCounter++
     }
     let returnPromise: Promise<any> = this.task.cycleCounter.getPromiseForCycle(this.bufferCounter + 1)

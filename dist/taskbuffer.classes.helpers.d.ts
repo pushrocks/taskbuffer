@@ -21,10 +21,8 @@ export declare class CycleCounter {
 export declare class BufferRunner {
     task: Task;
     bufferCounter: number;
-    bufferMax: number;
     running: boolean;
     constructor(taskArg: Task);
-    setBufferMax(bufferMaxArg: number): void;
     trigger(x: any): Promise<any>;
     private _run(x);
 }

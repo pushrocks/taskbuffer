@@ -6,9 +6,15 @@ export interface ITaskFunction {
 }
 
 export class Task {
+  // man datory properties
   name: string
   taskFunction: ITaskFunction
   buffered: boolean
+
+  bufferMax: number
+  execDelay: number
+
+  // tasks to run before and after
   preTask: Task
   afterTask: Task
 
@@ -16,31 +22,55 @@ export class Task {
   running: boolean = false
   bufferRunner = new helpers.BufferRunner(this)
   cycleCounter = new helpers.CycleCounter(this)
+
   idle: boolean = true
   private _state: string = 'ready'
 
-  constructor (optionsArg: {
-    taskFunction: ITaskFunction,
-    preTask?: Task,
-    afterTask?: Task,
-    buffered?: boolean,
-    bufferMax?: number,
+  constructor(optionsArg: {
+    /**
+     * the task function to run, must return promise
+     */
+    taskFunction: ITaskFunction
+    /**
+     * any other task to run before
+     */
+    preTask?: Task
+    /**
+     * any other task to run after
+     */
+    afterTask?: Task
+    /**
+     * wether this task should run buffered
+     */
+    buffered?: boolean
+    /**
+     * the maximum buffer
+     */
+    bufferMax?: number
+    /**
+     * the execution delay, before the task is executed
+     * only makes sense when running in buffered mode
+     */
+    execDelay?: number
+    /**
+     * the name of the task
+     */
     name?: string
   }) {
-    let options = optionsArg
     this.taskFunction = optionsArg.taskFunction
-    this.preTask = options.preTask
-    this.afterTask = options.afterTask
+    this.preTask = optionsArg.preTask
+    this.afterTask = optionsArg.afterTask
     this.idle = !this.running
-    this.buffered = options.buffered
-    this.bufferRunner.setBufferMax(options.bufferMax)
-    this.name = options.name
+    this.buffered = optionsArg.buffered
+    this.bufferMax = optionsArg.bufferMax
+    this.execDelay = optionsArg.execDelay
+    this.name = optionsArg.name
   }
 
   /**
    * trigger the task. Will trigger buffered if this.buffered is true
    */
-  trigger (x?): Promise<any> {
+  trigger(x?): Promise<any> {
     if (this.buffered) {
       return this.triggerBuffered(x)
     } else {
@@ -51,21 +81,22 @@ export class Task {
   /**
    * trigger task unbuffered.
    */
-  triggerUnBuffered (x?): Promise<any> {
+  triggerUnBuffered(x?): Promise<any> {
     return helpers.runTask(this, { x: x })
   }
 
   /**
    * trigger task buffered.
    */
-  triggerBuffered (x?): Promise<any> {
+  triggerBuffered(x?): Promise<any> {
     return this.bufferRunner.trigger(x)
   }
 
-  get state (): string {
+  get state(): string {
     return this._state
   }
-  set state (stateArg: string) {
+
+  set state(stateArg: string) {
     if (stateArg === 'locked') {
       this._state = 'locked'
     } else {
