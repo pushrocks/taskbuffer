@@ -61,6 +61,9 @@ myTask = new taskbuffer.Task({
   preTask: someOtherTask // optional, don't worry loops are prevented
   afterTask: someOtherTask // optional, don't worry loops are prevented
   name:"myTask1",
+  buffered: true, // optional
+  bufferMax: 3, // optional, call qeues greater than this are truncated
+  execDelay: 1000, // optional, time in ms to wait before executing task call
   taskFunction:() => {
     // do some stuff and return promise
     // pass on any data through promise resolution
