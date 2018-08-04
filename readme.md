@@ -1,4 +1,4 @@
-# taskbuffer
+# @pushrocks/taskbuffer
 
 flexible task management. TypeScript ready!
 
