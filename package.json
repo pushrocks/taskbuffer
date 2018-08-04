@@ -1,6 +1,6 @@
 {
   "name": "@pushrocks/taskbuffer",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "flexible task management. TypeScript ready!",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
