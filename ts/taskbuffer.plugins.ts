@@ -1,18 +1,8 @@
-import 'typings-global'
-import * as beautylog from 'beautylog'
-let cron = require('cron')
-import * as lik from 'lik'
-import * as lodash from 'lodash'
-import * as rxjs from 'rxjs'
-import * as q from 'smartq'
-import * as smartdelay from 'smartdelay'
+import * as smartlog from '@pushrocks/smartlog';
+let cron = require('cron');
+import * as lik from '@pushrocks/lik';
+import * as rxjs from 'rxjs';
+import * as smartpromise from '@pushrocks/smartpromise';
+import * as smartdelay from '@pushrocks/smartdelay';
 
-export {
-    beautylog,
-    cron,
-    lik,
-    lodash,
-    rxjs,
-    q,
-    smartdelay
-}
+export { smartlog, cron, lik, rxjs, smartpromise, smartdelay };

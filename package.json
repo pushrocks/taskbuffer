@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "(npmts)"
+    "test": "tstest test/",
+    "build": "echo \"Not needed for now\""
   },
   "repository": {
     "type": "git",
@@ -25,18 +26,18 @@
   },
   "homepage": "https://gitlab.com/pushrocks/taskbuffer#readme",
   "dependencies": {
-    "@types/cron": "^1.2.1",
-    "@types/lodash": "4.x.x",
-    "beautylog": "^6.1.10",
-    "cron": "^1.2.1",
-    "lik": "^1.0.38",
-    "lodash": "^4.17.4",
-    "rxjs": "^5.4.2",
-    "smartdelay": "^1.0.3",
-    "smartq": "^1.1.6",
-    "typings-global": "^1.0.19"
+    "@pushrocks/lik": "^3.0.1",
+    "@pushrocks/smartdelay": "^2.0.1",
+    "@pushrocks/smartlog": "^2.0.1",
+    "@pushrocks/smartpromise": "^2.0.5",
+    "@types/cron": "^1.3.0",
+    "cron": "^1.3.0",
+    "rxjs": "^6.2.2"
   },
   "devDependencies": {
-    "tapbundle": "^1.1.0"
-  }
+    "@gitzone/tstest": "^1.0.7",
+    "@pushrocks/tapbundle": "^3.0.1",
+    "@types/node": "^10.5.4"
+  },
+  "private": true
 }

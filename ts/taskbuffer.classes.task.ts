@@ -1,70 +1,70 @@
-import * as plugins from './taskbuffer.plugins'
-import * as helpers from './taskbuffer.classes.helpers'
+import * as plugins from './taskbuffer.plugins';
+import * as helpers from './taskbuffer.classes.helpers';
 
 export interface ITaskFunction {
-  (x?: any): PromiseLike<any>
+  (x?: any): PromiseLike<any>;
 }
 
 export class Task {
   // man datory properties
-  name: string
-  taskFunction: ITaskFunction
-  buffered: boolean
+  name: string;
+  taskFunction: ITaskFunction;
+  buffered: boolean;
 
-  bufferMax: number
-  execDelay: number
+  bufferMax: number;
+  execDelay: number;
 
   // tasks to run before and after
-  preTask: Task
-  afterTask: Task
+  preTask: Task;
+  afterTask: Task;
 
   // initialize by default
-  running: boolean = false
-  bufferRunner = new helpers.BufferRunner(this)
-  cycleCounter = new helpers.CycleCounter(this)
+  running: boolean = false;
+  bufferRunner = new helpers.BufferRunner(this);
+  cycleCounter = new helpers.CycleCounter(this);
 
-  idle: boolean = true
-  private _state: string = 'ready'
+  idle: boolean = true;
+  private _state: string = 'ready';
 
   constructor(optionsArg: {
     /**
      * the task function to run, must return promise
      */
-    taskFunction: ITaskFunction
+    taskFunction: ITaskFunction;
     /**
      * any other task to run before
      */
-    preTask?: Task
+    preTask?: Task;
     /**
      * any other task to run after
      */
-    afterTask?: Task
+    afterTask?: Task;
     /**
      * wether this task should run buffered
      */
-    buffered?: boolean
+    buffered?: boolean;
     /**
      * the maximum buffer
      */
-    bufferMax?: number
+    bufferMax?: number;
     /**
      * the execution delay, before the task is executed
      * only makes sense when running in buffered mode
      */
-    execDelay?: number
+    execDelay?: number;
     /**
      * the name of the task
      */
-    name?: string
+    name?: string;
   }) {
-    this.taskFunction = optionsArg.taskFunction
-    this.preTask = optionsArg.preTask
-    this.afterTask = optionsArg.afterTask
-    this.idle = !this.running
-    this.buffered = optionsArg.buffered
-    this.bufferMax = optionsArg.bufferMax
-    this.execDelay = optionsArg.execDelay
-    this.name = optionsArg.name
+    this.taskFunction = optionsArg.taskFunction;
+    this.preTask = optionsArg.preTask;
+    this.afterTask = optionsArg.afterTask;
+    this.idle = !this.running;
+    this.buffered = optionsArg.buffered;
+    this.bufferMax = optionsArg.bufferMax;
+    this.execDelay = optionsArg.execDelay;
+    this.name = optionsArg.name;
   }
 
   /**
@@ -72,9 +72,9 @@ export class Task {
    */
   trigger(x?): Promise<any> {
     if (this.buffered) {
-      return this.triggerBuffered(x)
+      return this.triggerBuffered(x);
     } else {
-      return this.triggerUnBuffered(x)
+      return this.triggerUnBuffered(x);
     }
   }
 
@@ -82,25 +82,25 @@ export class Task {
    * trigger task unbuffered.
    */
   triggerUnBuffered(x?): Promise<any> {
-    return helpers.runTask(this, { x: x })
+    return helpers.runTask(this, { x: x });
   }
 
   /**
    * trigger task buffered.
    */
   triggerBuffered(x?): Promise<any> {
-    return this.bufferRunner.trigger(x)
+    return this.bufferRunner.trigger(x);
   }
 
   get state(): string {
-    return this._state
+    return this._state;
   }
 
   set state(stateArg: string) {
     if (stateArg === 'locked') {
-      this._state = 'locked'
+      this._state = 'locked';
     } else {
-      plugins.beautylog.error('state type ' + stateArg + ' could not be set')
+      plugins.smartlog.defaultLogger.error('state type ' + stateArg + ' could not be set');
     }
   }
 }
