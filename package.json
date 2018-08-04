@@ -1,6 +1,7 @@
 {
   "name": "@pushrocks/taskbuffer",
   "version": "2.0.1",
+  "private": false,
   "description": "flexible task management. TypeScript ready!",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -38,6 +39,5 @@
     "@gitzone/tstest": "^1.0.7",
     "@pushrocks/tapbundle": "^3.0.1",
     "@types/node": "^10.5.4"
-  },
-  "private": true
+  }
 }
