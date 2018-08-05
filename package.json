@@ -36,8 +36,8 @@
     "rxjs": "^6.2.2"
   },
   "devDependencies": {
-    "@gitzone/tstest": "^1.0.7",
+    "@gitzone/tstest": "^1.0.11",
     "@pushrocks/tapbundle": "^3.0.1",
-    "@types/node": "^10.5.4"
+    "@types/node": "^10.5.6"
   }
 }
