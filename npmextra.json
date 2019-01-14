@@ -1,12 +1,7 @@
 {
-  "npmts":{
-    "mode":"default",
-    "testConfig": {
-      "parallel": false
-    }
-  },
   "npmci": {
     "npmGlobalTools": [],
-    "npmAccessLevel": "public"
+    "npmAccessLevel": "public",
+    "npmRegistryUrl": "registry.npmjs.org"
   }
 }
