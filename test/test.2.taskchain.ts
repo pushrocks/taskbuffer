@@ -1,7 +1,7 @@
 import { expect, tap } from '@pushrocks/tapbundle';
 import taskbuffer = require('../ts/index');
 
-import * as smartq from 'smartq';
+import * as smartpromise from '@pushrocks/smartpromise';
 import * as smartdelay from '@pushrocks/smartdelay';
 
 let task1Executed = false;

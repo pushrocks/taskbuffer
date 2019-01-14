@@ -8,11 +8,8 @@ import * as smartdelay from '@pushrocks/smartdelay';
 let testTask: taskbuffer.Task;
 
 let testPreTask = new taskbuffer.Task({
-  taskFunction: function() {
-    let done = smartpromise.defer();
+  taskFunction: async () => {
     console.log('preTask executed');
-    done.resolve();
-    return done.promise;
   },
   preTask: testTask
 });
@@ -35,14 +32,14 @@ let task1 = new taskbuffer.Task({
 
 let task2 = new taskbuffer.Task({
   name: 'Task 1',
-  taskFunction: () => {
-    let done = smartpromise.defer();
+  taskFunction: async () => {
+    const done = smartpromise.defer();
     console.log('Task2 started');
     setTimeout(() => {
       console.log('Task2 executed');
       done.resolve();
     }, 5000);
-    return done.promise;
+    await done.promise;
   }
 });
 

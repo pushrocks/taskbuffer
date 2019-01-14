@@ -100,7 +100,7 @@ export class Task {
     if (stateArg === 'locked') {
       this._state = 'locked';
     } else {
-      plugins.smartlog.defaultLogger.error('state type ' + stateArg + ' could not be set');
+      plugins.smartlog.defaultLogger.log('error', 'state type ' + stateArg + ' could not be set');
     }
   }
 }

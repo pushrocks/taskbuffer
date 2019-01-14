@@ -27,18 +27,20 @@
   },
   "homepage": "https://gitlab.com/pushrocks/taskbuffer#readme",
   "dependencies": {
-    "@pushrocks/lik": "^3.0.1",
-    "@pushrocks/smartdelay": "^2.0.1",
-    "@pushrocks/smartlog": "^2.0.1",
+    "@pushrocks/lik": "^3.0.4",
+    "@pushrocks/smartdelay": "^2.0.2",
+    "@pushrocks/smartlog": "^2.0.9",
     "@pushrocks/smartpromise": "^2.0.5",
     "@types/cron": "^1.3.0",
-    "cron": "^1.3.0",
-    "rxjs": "^6.2.2"
+    "cron": "^1.6.0",
+    "rxjs": "^6.3.3"
   },
   "devDependencies": {
-    "@gitzone/tsbuild": "^2.0.22",
-    "@gitzone/tstest": "^1.0.11",
-    "@pushrocks/tapbundle": "^3.0.1",
-    "@types/node": "^10.5.6"
+    "@gitzone/tsbuild": "^2.1.4",
+    "@gitzone/tstest": "^1.0.18",
+    "@pushrocks/tapbundle": "^3.0.7",
+    "@types/node": "^10.12.18",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0"
   }
 }

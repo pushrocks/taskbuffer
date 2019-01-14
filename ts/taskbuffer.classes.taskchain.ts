@@ -29,7 +29,7 @@ export class Taskchain extends Task {
             if (typeof this.taskArray[taskCounter] !== 'undefined') {
               console.log(this.name + ' running: Task' + this.taskArray[taskCounter].name);
               this.taskArray[taskCounter].trigger(x).then(x => {
-                plugins.smartlog.defaultLogger.info(this.taskArray[taskCounter].name);
+                plugins.smartlog.defaultLogger.log('info', this.taskArray[taskCounter].name);
                 taskCounter++;
                 iterateTasks(x);
               });
