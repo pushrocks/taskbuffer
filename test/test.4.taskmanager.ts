@@ -6,7 +6,7 @@ import * as smartdelay from '@pushrocks/smartdelay';
 
 let myTaskManager: taskbuffer.TaskManager;
 let taskRunCounter = 0;
-let taskDone = smartpromise.defer();
+const taskDone = smartpromise.defer();
 
 tap.test('should create an instance of TaskManager', async () => {
   myTaskManager = new taskbuffer.TaskManager();

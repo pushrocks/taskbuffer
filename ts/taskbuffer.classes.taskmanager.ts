@@ -5,7 +5,7 @@ import { Task } from './taskbuffer.classes.task';
 import { Objectmap } from '@pushrocks/lik';
 
 export class TaskManager {
-  taskMap = new plugins.lik.Objectmap<Task>();
+  public taskMap = new plugins.lik.Objectmap<Task>();
   private cronJobMap = new plugins.lik.Objectmap<ICronJob>();
   constructor() {
     // nothing here
@@ -15,7 +15,7 @@ export class TaskManager {
    * checks if a task is already present
    * @param taskNameArg
    */
-  getTaskByName(taskNameArg): Task {
+  public getTaskByName(taskNameArg): Task {
     return this.taskMap.find(itemArg => {
       return itemArg.name === taskNameArg;
     });
@@ -25,7 +25,7 @@ export class TaskManager {
    * adds a Task to the TaskManager
    * @param taskArg
    */
-  addTask(taskArg: Task): void {
+  public addTask(taskArg: Task): void {
     if (!taskArg.name) {
       throw new Error('taskArg needs a name to be added to taskManager');
     }
@@ -37,9 +37,9 @@ export class TaskManager {
    * @param taskArg
    * @param cronStringArg
    */
-  addAndScheduleTask(taskArg: Task, cronStringArg: string) {
+  public addAndScheduleTask(taskArg: Task, cronStringArg: string) {
     this.addTask(taskArg);
-    let taskName = taskArg.name;
+    const taskName = taskArg.name;
     this.scheduleTaskByName(taskName, cronStringArg);
   }
 
@@ -47,8 +47,8 @@ export class TaskManager {
    * triggers a task in the TaskManagerByName
    * @param taskNameArg
    */
-  triggerTaskByName(taskNameArg: string): Promise<any> {
-    let taskToTrigger = this.getTaskByName(taskNameArg);
+  public triggerTaskByName(taskNameArg: string): Promise<any> {
+    const taskToTrigger = this.getTaskByName(taskNameArg);
     if (!taskToTrigger) {
       throw new Error(`There is no task with the name of ${taskNameArg}`);
     }
@@ -59,9 +59,9 @@ export class TaskManager {
    * schedules the task by name
    * @param taskNameArg
    */
-  scheduleTaskByName(taskNameArg: string, cronStringArg: string) {
-    let taskToSchedule = this.getTaskByName(taskNameArg);
-    let job = new plugins.cron.CronJob({
+  public scheduleTaskByName(taskNameArg: string, cronStringArg: string) {
+    const taskToSchedule = this.getTaskByName(taskNameArg);
+    const job = new plugins.cron.CronJob({
       cronTime: cronStringArg,
       onTick: () => {
         this.triggerTaskByName(taskNameArg);
@@ -75,8 +75,8 @@ export class TaskManager {
     });
   }
 
-  descheduleTaskByName(taskNameArg: string) {
-    let descheduledCron = this.cronJobMap.findOneAndRemove(itemArg => {
+  public descheduleTaskByName(taskNameArg: string) {
+    const descheduledCron = this.cronJobMap.findOneAndRemove(itemArg => {
       return itemArg.taskNameArg === taskNameArg;
     });
     descheduledCron.job.stop();
@@ -85,7 +85,7 @@ export class TaskManager {
    * returns all schedules of a specific task
    * @param taskNameArg
    */
-  getSchedulesForTaskName(taskNameArg: string) {}
+  public getSchedulesForTaskName(taskNameArg: string) {}
 }
 
 export interface ICronJob {
