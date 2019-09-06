@@ -3,5 +3,15 @@
     "npmGlobalTools": [],
     "npmAccessLevel": "public",
     "npmRegistryUrl": "registry.npmjs.org"
+  },
+  "gitzone": {
+    "module": {
+      "githost": "gitlab.com",
+      "gitscope": "pushrocks",
+      "gitrepo": "taskbuffer",
+      "shortDescription": "flexible task management. TypeScript ready!",
+      "npmPackagename": "@pushrocks/taskbuffer",
+      "license": "MIT"
+    }
   }
 }
