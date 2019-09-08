@@ -1,5 +1,5 @@
 import * as smartlog from '@pushrocks/smartlog';
-let cron = require('cron');
+import cron from 'cron';
 import * as lik from '@pushrocks/lik';
 import * as rxjs from 'rxjs';
 import * as smartpromise from '@pushrocks/smartpromise';

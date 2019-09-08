@@ -1,12 +1,16 @@
 import * as plugins from './taskbuffer.plugins';
 import { Task } from './taskbuffer.classes.task';
 
-// interfaces
-import { Objectmap } from '@pushrocks/lik';
+export interface ICronJob {
+  cronString: string;
+  taskNameArg: string;
+  job: any;
+}
 
 export class TaskManager {
   public taskMap = new plugins.lik.Objectmap<Task>();
   private cronJobMap = new plugins.lik.Objectmap<ICronJob>();
+  
   constructor() {
     // nothing here
   }
@@ -55,6 +59,10 @@ export class TaskManager {
     return taskToTrigger.trigger();
   }
 
+  public async triggerTask(task: Task) {
+    return task.trigger();
+  }
+
   /**
    * schedules the task by name
    * @param taskNameArg
@@ -71,25 +79,31 @@ export class TaskManager {
     this.cronJobMap.add({
       taskNameArg: taskToSchedule.name,
       cronString: cronStringArg,
-      job: job
+      job
     });
   }
 
+  /**
+   * deschedules a task by name
+   * @param taskNameArg 
+   */
   public descheduleTaskByName(taskNameArg: string) {
     const descheduledCron = this.cronJobMap.findOneAndRemove(itemArg => {
       return itemArg.taskNameArg === taskNameArg;
     });
     descheduledCron.job.stop();
   }
+
+  /**
+   * deschedules a task
+   * @param task
+   */
+  public async descheduleTask(task: Task) {
+    await this.descheduleTaskByName(task.name);
+  }
   /**
    * returns all schedules of a specific task
    * @param taskNameArg
    */
   public getSchedulesForTaskName(taskNameArg: string) {}
-}
-
-export interface ICronJob {
-  cronString: string;
-  taskNameArg: string;
-  job: any;
 }
