@@ -1,13 +1,13 @@
 import plugins = require('./taskbuffer.plugins');
 import { Task, ITaskFunction } from './taskbuffer.classes.task';
 
-export let emptyTaskFunction: ITaskFunction = function(x) {
-  let done = plugins.smartpromise.defer();
+export const emptyTaskFunction: ITaskFunction = function(x) {
+  const done = plugins.smartpromise.defer();
   done.resolve();
   return done.promise;
 };
 
-export let isTask = function(taskArg: Task): boolean {
+export const isTask = (taskArg: Task): boolean => {
   if (taskArg instanceof Task && typeof taskArg.taskFunction === 'function') {
     return true;
   } else {
@@ -15,9 +15,9 @@ export let isTask = function(taskArg: Task): boolean {
   }
 };
 
-export let isTaskTouched = (taskArg: Task, touchedTasksArray: Task[]): boolean => {
+export const isTaskTouched = (taskArg: Task, touchedTasksArray: Task[]): boolean => {
   let result = false;
-  for (let keyArg in touchedTasksArray) {
+  for (const keyArg in touchedTasksArray) {
     if (taskArg === touchedTasksArray[keyArg]) {
       result = true;
     }
@@ -25,8 +25,8 @@ export let isTaskTouched = (taskArg: Task, touchedTasksArray: Task[]): boolean =
   return result;
 };
 
-export let runTask = async (taskArg: Task, optionsArg: { x?; touchedTasksArray?: Task[] }) => {
-  let done = plugins.smartpromise.defer();
+export const runTask = async (taskArg: Task, optionsArg: { x?; touchedTasksArray?: Task[] }) => {
+  const done = plugins.smartpromise.defer();
 
   // pay respect to execDelay
   if (taskArg.execDelay) {
@@ -41,35 +41,41 @@ export let runTask = async (taskArg: Task, optionsArg: { x?; touchedTasksArray?:
   });
 
   // handle options
-  let options = {
+  const options = {
     ...{ x: undefined, touchedTasksArray: [] },
     ...optionsArg
   };
-  let x = options.x;
-  let touchedTasksArray: Task[] = options.touchedTasksArray;
+  const x = options.x;
+  const touchedTasksArray: Task[] = options.touchedTasksArray;
 
   touchedTasksArray.push(taskArg);
 
   // run the task cascade
-  let localDeferred = plugins.smartpromise.defer();
+  const localDeferred = plugins.smartpromise.defer();
   localDeferred.promise
     .then(() => {
+      // lets run any preTask
       if (taskArg.preTask && !isTaskTouched(taskArg.preTask, touchedTasksArray)) {
-        return runTask(taskArg.preTask, { x: x, touchedTasksArray: touchedTasksArray });
+        return runTask(taskArg.preTask, { x, touchedTasksArray });
       } else {
-        let done2 = plugins.smartpromise.defer();
+        const done2 = plugins.smartpromise.defer();
         done2.resolve(x);
         return done2.promise;
       }
     })
-    .then(x => {
-      return taskArg.taskFunction(x);
+    .then(async x => {
+      // lets run the main task
+      try {
+        return await taskArg.taskFunction(x);
+      } catch (e) {
+        console.log(e);
+      }
     })
     .then(x => {
       if (taskArg.afterTask && !isTaskTouched(taskArg.afterTask, touchedTasksArray)) {
         return runTask(taskArg.afterTask, { x: x, touchedTasksArray: touchedTasksArray });
       } else {
-        let done2 = plugins.smartpromise.defer();
+        const done2 = plugins.smartpromise.defer();
         done2.resolve(x);
         return done2.promise;
       }
@@ -96,8 +102,8 @@ export class CycleCounter {
     this.task = taskArg;
   }
   getPromiseForCycle(cycleCountArg: number) {
-    let done = plugins.smartpromise.defer();
-    let cycleObject: cycleObject = {
+    const done = plugins.smartpromise.defer();
+    const cycleObject: cycleObject = {
       cycleCounter: cycleCountArg,
       deferred: done
     };
@@ -105,7 +111,7 @@ export class CycleCounter {
     return done.promise;
   }
   informOfCycle(x) {
-    let newCycleObjectArray: cycleObject[] = [];
+    const newCycleObjectArray: cycleObject[] = [];
     this.cycleObjectArray.forEach(cycleObjectArg => {
       cycleObjectArg.cycleCounter--;
       if (cycleObjectArg.cycleCounter <= 0) {
@@ -131,7 +137,7 @@ export class BufferRunner {
     if (!(this.bufferCounter >= this.task.bufferMax)) {
       this.bufferCounter++;
     }
-    let returnPromise: Promise<any> = this.task.cycleCounter.getPromiseForCycle(
+    const returnPromise: Promise<any> = this.task.cycleCounter.getPromiseForCycle(
       this.bufferCounter + 1
     );
     if (!this.running) {
@@ -141,7 +147,7 @@ export class BufferRunner {
   }
 
   private _run(x) {
-    let recursiveBufferRunner = x => {
+    const recursiveBufferRunner = x => {
       if (this.bufferCounter >= 0) {
         this.running = true;
         this.task.running = true;
