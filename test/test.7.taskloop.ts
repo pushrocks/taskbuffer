@@ -12,12 +12,17 @@ tap.test('should create tasks', async () => {
     name: 'myPreTask',
     taskFunction: async () => {
       console.log('pretask executed :)');
+      return 'hi';
     }
   });
   afterTask = new taskbuffer.Task({
     name: 'myAfterTask',
-    taskFunction: async () => {
+    taskFunction: async (x) => {
+      if (x === 'hi') {
+        console.log('afterTask: values get passed along alright');
+      }
       console.log('afterTask executed :)');
+      return x;
     },
     preTask,
     afterTask
@@ -25,8 +30,12 @@ tap.test('should create tasks', async () => {
 
   mainTask = new taskbuffer.Task({
     name: 'mainTask',
-    taskFunction: async () => {
-      console.log('main task executed');
+    taskFunction: async (x) => {
+      if (x === 'hi') {
+        console.log('mainTask: values get passed along alright');
+      }
+      console.log('afterTask executed :)');
+      return x;
     },
     preTask,
     afterTask
