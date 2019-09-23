@@ -37,12 +37,14 @@ tap.test('should create tasks', async () => {
       console.log('afterTask executed :)');
       return x;
     },
-    preTask,
+    preTask: () => {
+      return preTask;
+    },
     afterTask
   });
 });
 
-tap.test('should execute the mainTasj', async () => {
+tap.test('should execute the mainTask', async () => {
   await mainTask.trigger();
 });
 
