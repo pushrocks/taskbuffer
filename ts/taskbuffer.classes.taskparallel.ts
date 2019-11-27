@@ -3,14 +3,14 @@ import * as helpers from './taskbuffer.classes.helpers';
 import { Task } from './taskbuffer.classes.task';
 
 export class Taskparallel extends Task {
-  taskArray: Task[];
+  public taskArray: Task[];
   constructor(optionsArg: { taskArray: Task[] }) {
     const options = {
       ...optionsArg,
       ...{
         taskFunction: () => {
-          let done = plugins.smartpromise.defer();
-          let promiseArray: Promise<any>[] = []; // stores promises of all tasks, since they run in parallel
+          const done = plugins.smartpromise.defer();
+          const promiseArray: Promise<any>[] = []; // stores promises of all tasks, since they run in parallel
           this.taskArray.forEach(function(taskArg) {
             promiseArray.push(taskArg.trigger());
           });
