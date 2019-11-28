@@ -12,12 +12,12 @@ export type TPreOrAfterTaskFunction = () => Task;
 export class Task {
   // STATIC
   public static extractTask(preOrAfterTaskArg: Task | TPreOrAfterTaskFunction): Task {
-    switch(true) {
-      case (!preOrAfterTaskArg):
+    switch (true) {
+      case !preOrAfterTaskArg:
         return null;
-      case (preOrAfterTaskArg instanceof Task):
+      case preOrAfterTaskArg instanceof Task:
         return preOrAfterTaskArg as Task;
-      case typeof preOrAfterTaskArg === "function":
+      case typeof preOrAfterTaskArg === 'function':
         const taskFunction = preOrAfterTaskArg as TPreOrAfterTaskFunction;
         return taskFunction();
       default:
@@ -25,13 +25,12 @@ export class Task {
     }
   }
 
-
   public static emptyTaskFunction: ITaskFunction = function(x) {
     const done = plugins.smartpromise.defer();
     done.resolve();
     return done.promise;
   };
-  
+
   public static isTask = (taskArg: Task): boolean => {
     if (taskArg instanceof Task && typeof taskArg.taskFunction === 'function') {
       return true;
@@ -39,8 +38,11 @@ export class Task {
       return false;
     }
   };
-  
-  public static isTaskTouched = (taskArg: Task | TPreOrAfterTaskFunction, touchedTasksArray: Task[]): boolean => {
+
+  public static isTaskTouched = (
+    taskArg: Task | TPreOrAfterTaskFunction,
+    touchedTasksArray: Task[]
+  ): boolean => {
     const taskToCheck = Task.extractTask(taskArg);
     let result = false;
     for (const keyArg in touchedTasksArray) {
@@ -50,23 +52,26 @@ export class Task {
     }
     return result;
   };
-  
-  public static runTask = async (taskArg: Task | TPreOrAfterTaskFunction, optionsArg: { x?; touchedTasksArray?: Task[] }) => {
+
+  public static runTask = async (
+    taskArg: Task | TPreOrAfterTaskFunction,
+    optionsArg: { x?; touchedTasksArray?: Task[] }
+  ) => {
     const taskToRun = Task.extractTask(taskArg);
     const done = plugins.smartpromise.defer();
-  
+
     // pay respect to execDelay
     if (taskToRun.execDelay) {
       await plugins.smartdelay.delayFor(taskToRun.execDelay);
     }
-  
+
     //  set running params
     taskToRun.running = true;
-  
+
     done.promise.then(async () => {
       taskToRun.running = false;
     });
-  
+
     // handle options
     const options = {
       ...{ x: undefined, touchedTasksArray: [] },
@@ -74,15 +79,15 @@ export class Task {
     };
     const x = options.x;
     const touchedTasksArray: Task[] = options.touchedTasksArray;
-  
+
     touchedTasksArray.push(taskToRun);
-  
+
     // run the task cascade
     const localDeferred = plugins.smartpromise.defer();
     localDeferred.promise
       .then(() => {
         // lets run any preTask
-        
+
         if (taskToRun.preTask && !Task.isTaskTouched(taskToRun.preTask, touchedTasksArray)) {
           return Task.runTask(taskToRun.preTask, { x, touchedTasksArray });
         } else {
@@ -116,7 +121,7 @@ export class Task {
       });
     localDeferred.resolve();
     return await done.promise;
-  }
+  };
 
   // INSTANCE
   // man datory properties

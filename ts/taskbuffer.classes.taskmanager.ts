@@ -10,7 +10,7 @@ export interface ICronJob {
 export class TaskManager {
   public taskMap = new plugins.lik.Objectmap<Task>();
   private cronJobMap = new plugins.lik.Objectmap<ICronJob>();
-  
+
   constructor() {
     // nothing here
   }
@@ -85,7 +85,7 @@ export class TaskManager {
 
   /**
    * deschedules a task by name
-   * @param taskNameArg 
+   * @param taskNameArg
    */
   public descheduleTaskByName(taskNameArg: string) {
     const descheduledCron = this.cronJobMap.findOneAndRemove(itemArg => {

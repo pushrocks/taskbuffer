@@ -1,4 +1,4 @@
-import { Task } from "./taskbuffer.classes.task";
+import { Task } from './taskbuffer.classes.task';
 
 export class BufferRunner {
   public task: Task;

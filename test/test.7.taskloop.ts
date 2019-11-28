@@ -1,6 +1,6 @@
 import { tap, expect } from '@pushrocks/tapbundle';
 
-import * as taskbuffer from  '../ts';
+import * as taskbuffer from '../ts';
 
 let preTask: taskbuffer.Task;
 let afterTask: taskbuffer.Task;
@@ -17,7 +17,7 @@ tap.test('should create tasks', async () => {
   });
   afterTask = new taskbuffer.Task({
     name: 'myAfterTask',
-    taskFunction: async (x) => {
+    taskFunction: async x => {
       if (x === 'hi') {
         console.log('afterTask: values get passed along alright');
       }
@@ -30,7 +30,7 @@ tap.test('should create tasks', async () => {
 
   mainTask = new taskbuffer.Task({
     name: 'mainTask',
-    taskFunction: async (x) => {
+    taskFunction: async x => {
       if (x === 'hi') {
         console.log('mainTask: values get passed along alright');
       }
