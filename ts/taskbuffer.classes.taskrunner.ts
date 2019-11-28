@@ -33,7 +33,7 @@ export class TaskRunner {
   /**
    * starts the task queue
    */
-  public start() {
+  public async start() {
     this.status = 'running';
   }
 
@@ -57,7 +57,7 @@ export class TaskRunner {
   /**
    * stops the task queue
    */
-  public stop() {
+  public async stop() {
     this.status = 'stopped';
   }
 }

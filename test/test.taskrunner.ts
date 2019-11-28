@@ -5,7 +5,7 @@ let testTaskRunner: taskbuffer.TaskRunner;
 
 tap.test('should create a valid taskrunner', async () => {
   testTaskRunner = new taskbuffer.TaskRunner();
-  testTaskRunner.start();
+  await testTaskRunner.start();
 });
 
 tap.test('should execute task when its scheduled', async (tools) => {
