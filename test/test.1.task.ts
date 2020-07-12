@@ -11,7 +11,7 @@ let testPreTask = new taskbuffer.Task({
   taskFunction: async () => {
     console.log('preTask executed');
   },
-  preTask: testTask
+  preTask: testTask,
 });
 
 // some more tasks to test with
@@ -27,7 +27,7 @@ let task1 = new taskbuffer.Task({
       done.resolve();
     }, 5000);
     return done.promise;
-  }
+  },
 });
 
 let task2 = new taskbuffer.Task({
@@ -40,7 +40,7 @@ let task2 = new taskbuffer.Task({
       done.resolve();
     }, 5000);
     await done.promise;
-  }
+  },
 });
 
 let task3 = new taskbuffer.Task({
@@ -53,7 +53,7 @@ let task3 = new taskbuffer.Task({
       done.resolve();
     }, 5000);
     return done.promise;
-  }
+  },
 });
 
 tap.test('new Task() should return a new task', async () => {
@@ -61,7 +61,7 @@ tap.test('new Task() should return a new task', async () => {
     taskFunction: async () => {
       console.log('executed twice');
     },
-    preTask: testPreTask
+    preTask: testPreTask,
   });
 });
 
@@ -93,7 +93,7 @@ tap.test('expect to run a task without pre and afterTask errorless', async () =>
   let localTestTask = new taskbuffer.Task({
     taskFunction: async () => {
       console.log('only once');
-    }
+    },
   });
   await localTestTask.trigger();
 });
@@ -104,7 +104,7 @@ tap.test('expect task to run in buffered mode', async () => {
       await smartdelay.delayFor(3000);
     },
     buffered: true,
-    bufferMax: 2
+    bufferMax: 2,
   });
   localTestTask.trigger();
   localTestTask.trigger();

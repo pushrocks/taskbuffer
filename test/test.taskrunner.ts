@@ -10,18 +10,22 @@ tap.test('should create a valid taskrunner', async () => {
 
 tap.test('should execute task when its scheduled', async (tools) => {
   const done = tools.defer();
-  testTaskRunner.addTask(new taskbuffer.Task({
-    taskFunction: async () => {
-      console.log('hi');
-    }
-  }));
+  testTaskRunner.addTask(
+    new taskbuffer.Task({
+      taskFunction: async () => {
+        console.log('hi');
+      },
+    })
+  );
 
-  testTaskRunner.addTask(new taskbuffer.Task({
-    taskFunction: async () => {
-      console.log('there');
-      done.resolve();
-    }
-  }));
+  testTaskRunner.addTask(
+    new taskbuffer.Task({
+      taskFunction: async () => {
+        console.log('there');
+        done.resolve();
+      },
+    })
+  );
 
   await done.promise;
 });

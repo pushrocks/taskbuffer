@@ -1,5 +1,6 @@
 import * as plugins from './taskbuffer.plugins';
 import { Task } from './taskbuffer.classes.task';
+import { threadId } from 'worker_threads';
 
 export interface ICronJob {
   cronString: string;
@@ -8,8 +9,8 @@ export interface ICronJob {
 }
 
 export class TaskManager {
-  public taskMap = new plugins.lik.Objectmap<Task>();
-  private cronJobMap = new plugins.lik.Objectmap<ICronJob>();
+  public taskMap = new plugins.lik.ObjectMap<Task>();
+  private cronJobManager = new plugins.smarttime.CronManager();
 
   constructor() {
     // nothing here
@@ -20,7 +21,7 @@ export class TaskManager {
    * @param taskNameArg
    */
   public getTaskByName(taskNameArg): Task {
-    return this.taskMap.find(itemArg => {
+    return this.taskMap.find((itemArg) => {
       return itemArg.name === taskNameArg;
     });
   }
@@ -69,18 +70,11 @@ export class TaskManager {
    */
   public scheduleTaskByName(taskNameArg: string, cronStringArg: string) {
     const taskToSchedule = this.getTaskByName(taskNameArg);
-    const job = new plugins.cron.CronJob({
-      cronTime: cronStringArg,
-      onTick: () => {
-        this.triggerTaskByName(taskNameArg);
-      },
-      start: true
+    const cronJob = this.cronJobManager.addCronjob(cronStringArg, async () => {
+      await taskToSchedule.triggerBuffered();
     });
-    this.cronJobMap.add({
-      taskNameArg: taskToSchedule.name,
-      cronString: cronStringArg,
-      job
-    });
+    taskToSchedule.cronJob = cronJob;
+    this.cronJobManager.start();
   }
 
   /**
@@ -88,10 +82,14 @@ export class TaskManager {
    * @param taskNameArg
    */
   public descheduleTaskByName(taskNameArg: string) {
-    const descheduledCron = this.cronJobMap.findOneAndRemove(itemArg => {
-      return itemArg.taskNameArg === taskNameArg;
-    });
-    descheduledCron.job.stop();
+    const taskToDeSchedule = this.getTaskByName(taskNameArg);
+    if (taskToDeSchedule.cronJob) {
+      this.cronJobManager.removeCronjob(taskToDeSchedule.cronJob);
+      taskToDeSchedule.cronJob = null;
+    }
+    if (this.cronJobManager.cronjobs.isEmpty) {
+      this.cronJobManager.stop();
+    }
   }
 
   /**

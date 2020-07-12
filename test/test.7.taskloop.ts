@@ -13,11 +13,11 @@ tap.test('should create tasks', async () => {
     taskFunction: async () => {
       console.log('pretask executed :)');
       return 'hi';
-    }
+    },
   });
   afterTask = new taskbuffer.Task({
     name: 'myAfterTask',
-    taskFunction: async x => {
+    taskFunction: async (x) => {
       if (x === 'hi') {
         console.log('afterTask: values get passed along alright');
       }
@@ -25,12 +25,12 @@ tap.test('should create tasks', async () => {
       return x;
     },
     preTask,
-    afterTask
+    afterTask,
   });
 
   mainTask = new taskbuffer.Task({
     name: 'mainTask',
-    taskFunction: async x => {
+    taskFunction: async (x) => {
       if (x === 'hi') {
         console.log('mainTask: values get passed along alright');
       }
@@ -40,7 +40,7 @@ tap.test('should create tasks', async () => {
     preTask: () => {
       return preTask;
     },
-    afterTask
+    afterTask,
   });
 });
 

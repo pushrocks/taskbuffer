@@ -3,7 +3,7 @@
 
 import * as plugins from './taskbuffer.plugins';
 import { Task } from './taskbuffer.classes.task';
-import helpers = require('./taskbuffer.classes.helpers');
+import { logger } from './taskbuffer.logging';
 
 export class Taskchain extends Task {
   taskArray: Task[];
@@ -14,22 +14,22 @@ export class Taskchain extends Task {
     buffered?: boolean;
     bufferMax?: number;
   }) {
-    let options = {
+    const options = {
       ...{
         name: 'unnamed Taskchain',
-        log: false
+        log: false,
       },
       ...optionsArg,
       ...{
         taskFunction: (x: any) => {
           // this is the function that gets executed when TaskChain is triggered
-          let done = plugins.smartpromise.defer(); // this is the starting Deferred object
+          const done = plugins.smartpromise.defer(); // this is the starting Deferred object
           let taskCounter = 0; // counter for iterating async over the taskArray
-          let iterateTasks = x => {
+          const iterateTasks = (x) => {
             if (typeof this.taskArray[taskCounter] !== 'undefined') {
               console.log(this.name + ' running: Task' + this.taskArray[taskCounter].name);
-              this.taskArray[taskCounter].trigger(x).then(x => {
-                plugins.smartlog.defaultLogger.log('info', this.taskArray[taskCounter].name);
+              this.taskArray[taskCounter].trigger(x).then((x) => {
+                logger.log('info', this.taskArray[taskCounter].name);
                 taskCounter++;
                 iterateTasks(x);
               });
@@ -40,8 +40,8 @@ export class Taskchain extends Task {
           };
           iterateTasks(x);
           return done.promise;
-        }
-      }
+        },
+      },
     };
     super(options);
     this.taskArray = optionsArg.taskArray;

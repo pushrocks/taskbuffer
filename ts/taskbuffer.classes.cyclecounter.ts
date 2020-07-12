@@ -16,14 +16,14 @@ export class CycleCounter {
     const done = plugins.smartpromise.defer();
     const cycleObject: ICycleObject = {
       cycleCounter: cycleCountArg,
-      deferred: done
+      deferred: done,
     };
     this.cycleObjectArray.push(cycleObject);
     return done.promise;
   }
   public informOfCycle(x) {
     const newCycleObjectArray: ICycleObject[] = [];
-    this.cycleObjectArray.forEach(cycleObjectArg => {
+    this.cycleObjectArray.forEach((cycleObjectArg) => {
       cycleObjectArg.cycleCounter--;
       if (cycleObjectArg.cycleCounter <= 0) {
         cycleObjectArg.deferred.resolve(x);

@@ -15,7 +15,7 @@ export class TaskOnce extends Task {
           this.hasTriggered = true;
           await optionsArg.taskFunction();
         }
-      }
+      },
     });
   }
 }

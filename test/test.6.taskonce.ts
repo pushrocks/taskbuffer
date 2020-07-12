@@ -9,7 +9,7 @@ tap.test('should create a valid instance of TaskOnce', async () => {
   myTaskOnce = new taskbuffer.TaskOnce({
     taskFunction: async () => {
       myNumber++;
-    }
+    },
   });
   expect(myTaskOnce).to.be.instanceof(taskbuffer.TaskOnce);
 });

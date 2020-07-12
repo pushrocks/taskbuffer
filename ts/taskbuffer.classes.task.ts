@@ -1,7 +1,8 @@
 import * as plugins from './taskbuffer.plugins';
-import * as helpers from './taskbuffer.classes.helpers';
 import { BufferRunner } from './taskbuffer.classes.bufferrunner';
 import { CycleCounter } from './taskbuffer.classes.cyclecounter';
+
+import { logger } from './taskbuffer.logging';
 
 export interface ITaskFunction {
   (x?: any): PromiseLike<any>;
@@ -25,7 +26,7 @@ export class Task {
     }
   }
 
-  public static emptyTaskFunction: ITaskFunction = function(x) {
+  public static emptyTaskFunction: ITaskFunction = function (x) {
     const done = plugins.smartpromise.defer();
     done.resolve();
     return done.promise;
@@ -75,7 +76,7 @@ export class Task {
     // handle options
     const options = {
       ...{ x: undefined, touchedTasksArray: [] },
-      ...optionsArg
+      ...optionsArg,
     };
     const x = options.x;
     const touchedTasksArray: Task[] = options.touchedTasksArray;
@@ -96,7 +97,7 @@ export class Task {
           return done2.promise;
         }
       })
-      .then(async x => {
+      .then(async (x) => {
         // lets run the main task
         try {
           return await taskToRun.taskFunction(x);
@@ -104,7 +105,7 @@ export class Task {
           console.log(e);
         }
       })
-      .then(x => {
+      .then((x) => {
         if (taskToRun.afterTask && !Task.isTaskTouched(taskToRun.afterTask, touchedTasksArray)) {
           return Task.runTask(taskToRun.afterTask, { x: x, touchedTasksArray: touchedTasksArray });
         } else {
@@ -113,10 +114,10 @@ export class Task {
           return done2.promise;
         }
       })
-      .then(x => {
+      .then((x) => {
         done.resolve(x);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
     localDeferred.resolve();
@@ -128,6 +129,7 @@ export class Task {
   public name: string;
   public taskFunction: ITaskFunction;
   public buffered: boolean;
+  public cronJob: plugins.smarttime.CronJob;
 
   public bufferMax: number;
   public execDelay: number;
@@ -218,7 +220,7 @@ export class Task {
     if (stateArg === 'locked') {
       this._state = 'locked';
     } else {
-      plugins.smartlog.defaultLogger.log('error', 'state type ' + stateArg + ' could not be set');
+      logger.log('error', `state type ${stateArg} could not be set`);
     }
   }
 }

@@ -5,11 +5,11 @@ import { Task } from './taskbuffer.classes.task';
 export class TaskRunner {
   public maxParrallelJobs: number = 1;
   public status: 'stopped' | 'running' = 'stopped';
-  public runningTasks: plugins.lik.Objectmap<Task> = new plugins.lik.Objectmap<Task>();
+  public runningTasks: plugins.lik.ObjectMap<Task> = new plugins.lik.ObjectMap<Task>();
   public qeuedTasks: Task[] = [];
 
   constructor() {
-    this.runningTasks.eventSubject.subscribe(async eventArg => {
+    this.runningTasks.eventSubject.subscribe(async (eventArg) => {
       this.checkExecution();
     });
   }

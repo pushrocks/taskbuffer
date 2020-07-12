@@ -11,7 +11,7 @@ const flowTask1 = new taskbuffer.Task({
     console.log(x);
     done.resolve(x);
     return done.promise;
-  }
+  },
 });
 
 const flowTaskBuffered = new taskbuffer.Task({
@@ -23,7 +23,7 @@ const flowTaskBuffered = new taskbuffer.Task({
     return done.promise;
   },
   buffered: true,
-  bufferMax: 1
+  bufferMax: 1,
 });
 
 const flowTask2 = new taskbuffer.Task({
@@ -34,11 +34,11 @@ const flowTask2 = new taskbuffer.Task({
     done.resolve(x);
     return done.promise;
   },
-  preTask: flowTask1
+  preTask: flowTask1,
 });
 
 const flowTask3 = new taskbuffer.Taskchain({
-  taskArray: [flowTask1, flowTask2]
+  taskArray: [flowTask1, flowTask2],
 });
 
 tap.test('should let a value flow through a task', async () => {

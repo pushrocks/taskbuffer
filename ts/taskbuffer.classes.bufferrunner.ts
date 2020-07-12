@@ -23,11 +23,11 @@ export class BufferRunner {
   }
 
   private _run(x) {
-    const recursiveBufferRunner = x => {
+    const recursiveBufferRunner = (x) => {
       if (this.bufferCounter >= 0) {
         this.running = true;
         this.task.running = true;
-        Task.runTask(this.task, { x: x }).then(x => {
+        Task.runTask(this.task, { x: x }).then((x) => {
           this.bufferCounter--;
           this.task.cycleCounter.informOfCycle(x);
           recursiveBufferRunner(x);
