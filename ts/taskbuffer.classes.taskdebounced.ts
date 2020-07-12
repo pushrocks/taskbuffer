@@ -9,7 +9,7 @@ export class TaskDebounced<T = unknown> extends Task {
   constructor(optionsArg: {
     name: string;
     taskFunction: ITaskFunction;
-    type: 'atMostEvery' | 'afterQuietFor'
+    debounceTimeInMillis: number;
   }) {
     super({
       name: optionsArg.name,
@@ -18,7 +18,7 @@ export class TaskDebounced<T = unknown> extends Task {
       }
     });
     this.taskFunction = optionsArg.taskFunction;
-    this._observableIntake.observable.pipe(plugins.smartrx.rxjs.ops.debounceTime(2000)).subscribe((x) => {
+    this._observableIntake.observable.pipe(plugins.smartrx.rxjs.ops.debounceTime(optionsArg.debounceTimeInMillis)).subscribe((x) => {
       this.taskFunction(x);
     });
   }
