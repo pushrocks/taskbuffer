@@ -28,6 +28,7 @@ tap.test('should run the task as expected', async () => {
       },
     })
   );
+  myTaskManager.start();
   await myTaskManager.triggerTaskByName('myTask');
   // tslint:disable-next-line:no-unused-expression
   expect(referenceBoolean).to.be.true;
@@ -37,6 +38,10 @@ tap.test('should schedule task', async () => {
   myTaskManager.scheduleTaskByName('myTask', '* * * * * *');
   await taskDone.promise;
   myTaskManager.descheduleTaskByName('myTask');
+});
+
+tap.test('should stop the taskmanager', async () => {
+  myTaskManager.stop();
 });
 
 tap.start();

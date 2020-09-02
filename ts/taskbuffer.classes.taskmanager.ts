@@ -74,7 +74,6 @@ export class TaskManager {
       await taskToSchedule.triggerBuffered();
     });
     taskToSchedule.cronJob = cronJob;
-    this.cronJobManager.start();
   }
 
   /**
@@ -104,4 +103,18 @@ export class TaskManager {
    * @param taskNameArg
    */
   public getSchedulesForTaskName(taskNameArg: string) {}
+
+  /**
+   * starts the taskmanager
+   */
+  public start() {
+    this.cronJobManager.start();
+  }
+
+  /**
+   * stops the taskmanager
+   */
+  public stop() {
+    this.cronJobManager.stop();
+  }
 }
