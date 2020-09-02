@@ -15,11 +15,13 @@ export class TaskDebounced<T = unknown> extends Task {
       name: optionsArg.name,
       taskFunction: async (x: T) => {
         this._observableIntake.push(x);
-      }
+      },
     });
     this.taskFunction = optionsArg.taskFunction;
-    this._observableIntake.observable.pipe(plugins.smartrx.rxjs.ops.debounceTime(optionsArg.debounceTimeInMillis)).subscribe((x) => {
-      this.taskFunction(x);
-    });
+    this._observableIntake.observable
+      .pipe(plugins.smartrx.rxjs.ops.debounceTime(optionsArg.debounceTimeInMillis))
+      .subscribe((x) => {
+        this.taskFunction(x);
+      });
   }
 }
