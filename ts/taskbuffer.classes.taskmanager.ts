@@ -44,8 +44,7 @@ export class TaskManager {
    */
   public addAndScheduleTask(taskArg: Task, cronStringArg: string) {
     this.addTask(taskArg);
-    const taskName = taskArg.name;
-    this.scheduleTaskByName(taskName, cronStringArg);
+    this.scheduleTaskByName(taskArg.name, cronStringArg);
   }
 
   /**

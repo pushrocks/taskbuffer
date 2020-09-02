@@ -200,6 +200,7 @@ export class Task {
 
   /**
    * trigger task unbuffered.
+   * will actually run the task, not considering any buffered limits.
    */
   public triggerUnBuffered(x?): Promise<any> {
     return Task.runTask(this, { x: x });
@@ -207,6 +208,7 @@ export class Task {
 
   /**
    * trigger task buffered.
+   * will simply call task.trigger(), which respects buffering by default
    */
   public triggerBuffered(x?): Promise<any> {
     return this.bufferRunner.trigger(x);
