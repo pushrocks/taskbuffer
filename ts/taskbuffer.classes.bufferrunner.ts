@@ -4,7 +4,6 @@ export class BufferRunner {
   public task: Task;
   // initialze by default
   public bufferCounter: number = 0;
-  public running: boolean = false;
   constructor(taskArg: Task) {
     this.task = taskArg;
   }
@@ -16,7 +15,7 @@ export class BufferRunner {
     const returnPromise: Promise<any> = this.task.cycleCounter.getPromiseForCycle(
       this.bufferCounter + 1
     );
-    if (!this.running) {
+    if (!this.task.running) {
       this._run(x);
     }
     return returnPromise;
@@ -25,15 +24,13 @@ export class BufferRunner {
   private _run(x) {
     const recursiveBufferRunner = (x) => {
       if (this.bufferCounter >= 0) {
-        this.running = true;
         this.task.running = true;
         Task.runTask(this.task, { x: x }).then((x) => {
-          this.bufferCounter--;
+          this.bufferCounter--; // this.bufferCounter drops below 0, the recursion stops.
           this.task.cycleCounter.informOfCycle(x);
           recursiveBufferRunner(x);
         });
       } else {
-        this.running = false;
         this.task.running = false;
       }
     };
